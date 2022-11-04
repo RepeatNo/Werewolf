@@ -1,0 +1,5 @@
+name: Werewolf
+version: '${project.version}'
+main: at.ingameengine.werewolf.Werewolf
+api-version: 1.19
+authors: [ Minegt, NoRepeat ]
