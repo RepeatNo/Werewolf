@@ -4,11 +4,12 @@ import at.ingameengine.werewolf.Werewolf;
 
 public class GameStateManager {
 
-    private Werewolf plugin;
-    private GameState[] gameStates;
+    private final Werewolf plugin;
+    private final GameState[] gameStates;
     private GameState currentGameState;
 
     public GameStateManager(Werewolf plugin) {
+        this.plugin = plugin;
         gameStates = new GameState[5];
 
         gameStates[GameState.SETUP_STATE] = new SetupState();

@@ -1,5 +1,7 @@
 package at.ingameengine.gamestates;
 
+import at.ingameengine.commands.GameStateVisitor;
+
 public abstract class GameState {
     public static final int
             SETUP_STATE = 0,
@@ -11,5 +13,7 @@ public abstract class GameState {
     public abstract void start();
 
     public abstract void stop();
+
+    public abstract void accept(GameStateVisitor commandInspector);
 
 }

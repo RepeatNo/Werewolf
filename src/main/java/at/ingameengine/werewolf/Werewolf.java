@@ -1,5 +1,6 @@
 package at.ingameengine.werewolf;
 
+import at.ingameengine.commands.HelpCommand;
 import at.ingameengine.gamestates.GameState;
 import at.ingameengine.gamestates.GameStateManager;
 import org.bukkit.entity.Player;
@@ -18,10 +19,16 @@ public class Werewolf extends JavaPlugin {
         players = new ArrayList<>();
 
         gameStateManager.setGameState(GameState.LOBBY_STATE);
+
+        this.getCommand("help").setExecutor(new HelpCommand(this));
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public GameStateManager getGameStateManager() {
+        return gameStateManager;
     }
 }

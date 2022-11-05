@@ -1,6 +1,9 @@
 package at.ingameengine.gamestates;
 
-public class DayState extends GameState{
+import at.ingameengine.commands.Command;
+import at.ingameengine.commands.GameStateVisitor;
+
+public class DayState extends GameState implements Command {
     @Override
     public void start() {
 
@@ -9,5 +12,10 @@ public class DayState extends GameState{
     @Override
     public void stop() {
 
+    }
+
+    @Override
+    public void accept(GameStateVisitor commandInspector) {
+        commandInspector.visit(this);
     }
 }
