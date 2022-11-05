@@ -1,8 +1,6 @@
 package at.ingameengine.gamestates;
 
-import at.ingameengine.commands.GameStateVisitor;
-
-public abstract class GameState {
+public abstract class AGameState {
     public static final int
             SETUP_STATE = 0,
             LOBBY_STATE = 1,
@@ -14,6 +12,6 @@ public abstract class GameState {
 
     public abstract void stop();
 
-    public abstract void accept(GameStateVisitor commandInspector);
+    public abstract void accept(IGameStateVisitor commandInspector);
 
 }

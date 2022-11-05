@@ -1,22 +1,23 @@
 package at.ingameengine.gamestates;
 
+import at.ingameengine.gamestates.states.*;
 import at.ingameengine.werewolf.Werewolf;
 
 public class GameStateManager {
 
     private final Werewolf plugin;
-    private final GameState[] gameStates;
-    private GameState currentGameState;
+    private final AGameState[] gameStates;
+    private AGameState currentGameState;
 
     public GameStateManager(Werewolf plugin) {
         this.plugin = plugin;
-        gameStates = new GameState[5];
+        gameStates = new AGameState[5];
 
-        gameStates[GameState.SETUP_STATE] = new SetupState();
-        gameStates[GameState.LOBBY_STATE] = new LobbyState();
-        gameStates[GameState.DAY_STATE] = new DayState();
-        gameStates[GameState.NIGHT_STATE] = new NightState();
-        gameStates[GameState.ENDING_STATE] = new EndingState();
+        gameStates[AGameState.SETUP_STATE] = new SetupState();
+        gameStates[AGameState.LOBBY_STATE] = new LobbyState();
+        gameStates[AGameState.DAY_STATE] = new DayState();
+        gameStates[AGameState.NIGHT_STATE] = new NightState();
+        gameStates[AGameState.ENDING_STATE] = new EndingState();
     }
 
     public void setGameState(int gameStateId) {
@@ -27,7 +28,7 @@ public class GameStateManager {
         currentGameState.start();
     }
 
-    public GameState getGameState() {
+    public AGameState getGameState() {
         return currentGameState;
     }
 

@@ -1,8 +1,8 @@
-package at.ingameengine.commands;
+package at.ingameengine.gamestates;
 
-import at.ingameengine.gamestates.*;
+import at.ingameengine.gamestates.states.*;
 
-public interface GameStateVisitor {
+public interface IGameStateVisitor {
     void visit(SetupState state);
 
     void visit(LobbyState state);

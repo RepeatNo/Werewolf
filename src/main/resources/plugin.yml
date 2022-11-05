@@ -4,7 +4,7 @@ main: at.ingameengine.werewolf.Werewolf
 api-version: 1.19
 authors: [ Minegt, NoRepeat ]
 commands:
-  help:
-    description: Shows the help page
-    usage: /help
-    aliases: [ h ]
+  test:
+    description: Test command
+    usage: /test
+    aliases: [ t ]
