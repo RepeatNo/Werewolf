@@ -2,8 +2,13 @@ package at.ingameengine.gamestates.states;
 
 import at.ingameengine.gamestates.AGameState;
 import at.ingameengine.gamestates.IGameStateVisitor;
+import at.ingameengine.werewolf.Werewolf;
 
 public class EndingState extends AGameState {
+    public EndingState(Werewolf plugin) {
+        super(plugin);
+    }
+
     @Override
     public void start() {
 

@@ -4,8 +4,8 @@ import at.ingameengine.gamestates.AGameState;
 import at.ingameengine.gamestates.IGameStateVisitor;
 import at.ingameengine.werewolf.Werewolf;
 
-public class SetupState extends AGameState {
-    public SetupState(Werewolf plugin) {
+public class DiscussionState extends AGameState {
+    public DiscussionState(Werewolf plugin) {
         super(plugin);
     }
 
