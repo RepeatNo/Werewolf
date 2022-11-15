@@ -1,8 +1,12 @@
 package at.ingameengine.werewolf;
 
-import at.ingameengine.commands.HelpCommand;
-import at.ingameengine.gamestates.GameState;
+import at.ingameengine.commands.implementations.TestCommand;
+import at.ingameengine.entities.WerewolfPlayer;
+import at.ingameengine.gamestates.AGameState;
 import at.ingameengine.gamestates.GameStateManager;
+import at.ingameengine.listeners.JoinListener;
+import at.ingameengine.role.RoleManager;
+import at.ingameengine.utils.ConfigManager;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,16 +15,31 @@ import java.util.ArrayList;
 public class Werewolf extends JavaPlugin {
 
     private GameStateManager gameStateManager;
-    private ArrayList<Player> players;
+    public static final String prefix = "§6[§eWerewolf§6]§6 » §r";
+    private RoleManager roleManager;
+    private ConfigManager configManager;
+    private ArrayList<WerewolfPlayer> players;
 
     @Override
     public void onEnable() {
-        gameStateManager = new GameStateManager(this);
         players = new ArrayList<>();
 
-        gameStateManager.setGameState(GameState.LOBBY_STATE);
+        gameStateManager = new GameStateManager(this);
+        gameStateManager.setGameState(AGameState.SETUP_STATE);
+        roleManager = new RoleManager(this);
+        configManager = new ConfigManager(this);
 
-        this.getCommand("help").setExecutor(new HelpCommand(this));
+        //region Commands
+
+        this.getCommand("test").setExecutor(new TestCommand(this));
+
+        //endregion
+
+        //region Listeners
+
+        getServer().getPluginManager().registerEvents(new JoinListener(this), this);
+
+        //endregion
     }
 
     @Override
@@ -31,4 +50,22 @@ public class Werewolf extends JavaPlugin {
     public GameStateManager getGameStateManager() {
         return gameStateManager;
     }
+
+    public RoleManager getRoleManager() {
+        return roleManager;
+    }
+
+    public ArrayList<WerewolfPlayer> getPlayers() {
+        return players;
+    }
+
+    public void addPlayer(WerewolfPlayer player) {
+        this.players.add(player);
+    }
+
+    public void removePlayer(Player player) {
+        this.players.remove(player);
+    }
+
+
 }
