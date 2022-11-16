@@ -7,10 +7,10 @@ import at.ingameengine.gamestates.GameStateManager;
 import at.ingameengine.listeners.JoinListener;
 import at.ingameengine.role.RoleManager;
 import at.ingameengine.utils.ConfigManager;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Werewolf extends JavaPlugin {
 
@@ -27,11 +27,11 @@ public class Werewolf extends JavaPlugin {
         gameStateManager = new GameStateManager(this);
         gameStateManager.setGameState(AGameState.SETUP_STATE);
         roleManager = new RoleManager(this);
-        configManager = new ConfigManager(this);
+        configManager = new ConfigManager(this, "config.yml");
 
         //region Commands
 
-        this.getCommand("test").setExecutor(new TestCommand(this));
+        Objects.requireNonNull(this.getCommand("test")).setExecutor(new TestCommand(this));
 
         //endregion
 
@@ -55,6 +55,10 @@ public class Werewolf extends JavaPlugin {
         return roleManager;
     }
 
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
     public ArrayList<WerewolfPlayer> getPlayers() {
         return players;
     }
@@ -63,9 +67,7 @@ public class Werewolf extends JavaPlugin {
         this.players.add(player);
     }
 
-    public void removePlayer(Player player) {
+    public void removePlayer(WerewolfPlayer player) {
         this.players.remove(player);
     }
-
-
 }
