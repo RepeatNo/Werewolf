@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Werewolf extends JavaPlugin {
 
@@ -27,11 +28,11 @@ public class Werewolf extends JavaPlugin {
         gameStateManager = new GameStateManager(this);
         gameStateManager.setGameState(AGameState.SETUP_STATE);
         roleManager = new RoleManager(this);
-        configManager = new ConfigManager(this);
+        configManager = new ConfigManager(this, "config.yml");
 
         //region Commands
 
-        this.getCommand("test").setExecutor(new TestCommand(this));
+        Objects.requireNonNull(this.getCommand("test")).setExecutor(new TestCommand(this));
 
         //endregion
 
@@ -53,6 +54,10 @@ public class Werewolf extends JavaPlugin {
 
     public RoleManager getRoleManager() {
         return roleManager;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
     }
 
     public ArrayList<WerewolfPlayer> getPlayers() {
