@@ -3,7 +3,6 @@ package at.ingameengine.commands.implementations;
 import at.ingameengine.gamestates.AGameState;
 import at.ingameengine.gamestates.states.*;
 import at.ingameengine.werewolf.Werewolf;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -45,7 +44,6 @@ public class TestCommand extends ACommand {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         gameStateManager.getGameState().accept(this);
-        Bukkit.broadcastMessage("TestCommand execute");
         return true;
     }
 }

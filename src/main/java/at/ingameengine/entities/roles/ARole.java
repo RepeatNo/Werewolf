@@ -11,5 +11,7 @@ public abstract class ARole {
 
     }
 
-    public void onDeath() {}
+    public void onDeath() {
+
+    }
 }
