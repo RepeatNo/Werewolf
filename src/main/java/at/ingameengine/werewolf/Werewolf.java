@@ -7,7 +7,6 @@ import at.ingameengine.gamestates.GameStateManager;
 import at.ingameengine.listeners.JoinListener;
 import at.ingameengine.role.RoleManager;
 import at.ingameengine.utils.ConfigManager;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -68,7 +67,7 @@ public class Werewolf extends JavaPlugin {
         this.players.add(player);
     }
 
-    public void removePlayer(Player player) {
+    public void removePlayer(WerewolfPlayer player) {
         this.players.remove(player);
     }
 }

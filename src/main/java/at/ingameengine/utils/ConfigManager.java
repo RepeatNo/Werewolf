@@ -6,9 +6,24 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class ConfigManager {
     static final String directory = "plugins//Werewolf//";
+    final HashMap<String, String> replacements = new HashMap<String, String>() {
+        {
+            put("&arrow&", "»");
+            put("&block&", "█");
+            put("&stroke&", "▕");
+            put("&ue&", "ü");
+            put("&UE&", "Ü");
+            put("&ae&", "ä");
+            put("&AE&", "Ä");
+            put("&oe&", "ö");
+            put("&OE&", "Ö");
+            put("&", "§");
+        }
+    };
 
     Werewolf plugin;
     YamlConfiguration config = new YamlConfiguration();
@@ -45,6 +60,17 @@ public class ConfigManager {
     }
 
     public String readConfigString(String configName) {
-        return config.getString(configName);
+        return replaceConfigurationChars(config.getString(configName));
+    }
+
+    public Integer readConfigInt(String configName) {
+        return config.getInt(configName);
+    }
+
+    private String replaceConfigurationChars(String input) {
+        for (String key : replacements.keySet()) {
+            input = input.replaceAll(key, replacements.get(key));
+        }
+        return input;
     }
 }
