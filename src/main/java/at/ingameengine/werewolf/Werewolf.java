@@ -71,6 +71,4 @@ public class Werewolf extends JavaPlugin {
     public void removePlayer(Player player) {
         this.players.remove(player);
     }
-
-
 }
