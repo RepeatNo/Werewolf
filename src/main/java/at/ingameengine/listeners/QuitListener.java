@@ -1,36 +1,30 @@
 package at.ingameengine.listeners;
 
-import at.ingameengine.entities.WerewolfPlayer;
 import at.ingameengine.gamestates.states.*;
 import at.ingameengine.werewolf.Werewolf;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
-public class JoinListener extends AListener {
-
-    public JoinListener(Werewolf plugin) {
+public class QuitListener extends AListener {
+    public QuitListener(Werewolf plugin) {
         super(plugin);
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
+    public void onQuit(PlayerQuitEvent event) {
         this.event = event;
-        event.setJoinMessage(null);
+        event.setQuitMessage(null);
         gameStateManager.getGameState().accept(this);
     }
 
     @Override
     public void visit(SetupState state) {
-        Bukkit.broadcastMessage(Werewolf.prefix + "§a" + new WerewolfPlayer(event.getPlayer()).getPlayer().getName() + " §7joined the game!");
+
     }
 
     @Override
     public void visit(LobbyState state) {
-        WerewolfPlayer player = new WerewolfPlayer(event.getPlayer());
-        plugin.addPlayer(player);
 
-        Bukkit.broadcastMessage(Werewolf.prefix + "§a" + player.getPlayer().getName() + " §7joined the game!");
     }
 
     @Override

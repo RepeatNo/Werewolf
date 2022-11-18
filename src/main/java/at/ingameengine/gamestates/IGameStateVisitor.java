@@ -12,4 +12,6 @@ public interface IGameStateVisitor {
     void visit(NightState state);
 
     void visit(EndingState state);
+
+    void visit(DiscussionState state);
 }

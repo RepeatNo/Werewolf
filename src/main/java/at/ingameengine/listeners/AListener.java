@@ -16,5 +16,4 @@ public abstract class AListener implements Listener, IGameStateVisitor {
         this.plugin = plugin;
         gameStateManager = plugin.getGameStateManager();
     }
-
 }
