@@ -6,7 +6,7 @@ import at.ingameengine.gamestates.AGameState;
 import at.ingameengine.gamestates.GameStateManager;
 import at.ingameengine.listeners.JoinListener;
 import at.ingameengine.role.RoleManager;
-import at.ingameengine.utils.ConfigManager;
+import at.ingameengine.utils.FileManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -15,9 +15,10 @@ import java.util.Objects;
 public class Werewolf extends JavaPlugin {
 
     private GameStateManager gameStateManager;
-    public static final String prefix = "§6[§eWerewolf§6]§6 » §r";
+    public static String prefix;
     private RoleManager roleManager;
-    private ConfigManager configManager;
+    private FileManager configManager;
+    private FileManager messageManager;
     private ArrayList<WerewolfPlayer> players;
 
     @Override
@@ -27,7 +28,14 @@ public class Werewolf extends JavaPlugin {
         gameStateManager = new GameStateManager(this);
         gameStateManager.setGameState(AGameState.SETUP_STATE);
         roleManager = new RoleManager(this);
-        configManager = new ConfigManager(this, "config.yml");
+        configManager = new FileManager(this, "config.yml");
+        messageManager = new FileManager(this, "messages.yml");
+
+        //region FileManager
+
+        prefix = messageManager.readString("prefix");
+
+        //endregion
 
         //region Commands
 
@@ -55,8 +63,11 @@ public class Werewolf extends JavaPlugin {
         return roleManager;
     }
 
-    public ConfigManager getConfigManager() {
+    public FileManager getConfigManager() {
         return configManager;
+    }
+    public FileManager getMessageManager() {
+        return messageManager;
     }
 
     public ArrayList<WerewolfPlayer> getPlayers() {
