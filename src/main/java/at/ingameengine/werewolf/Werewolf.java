@@ -4,7 +4,7 @@ import at.ingameengine.commands.implementations.TestCommand;
 import at.ingameengine.entities.WerewolfPlayer;
 import at.ingameengine.gamestates.AGameState;
 import at.ingameengine.gamestates.GameStateManager;
-import at.ingameengine.listeners.JoinListener;
+import at.ingameengine.listeners.*;
 import at.ingameengine.role.RoleManager;
 import at.ingameengine.utils.FileManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,6 +46,11 @@ public class Werewolf extends JavaPlugin {
         //region Listeners
 
         getServer().getPluginManager().registerEvents(new JoinListener(this), this);
+        getServer().getPluginManager().registerEvents(new QuitListener(this), this);
+        getServer().getPluginManager().registerEvents(new BlockBreakListener(this), this);
+        getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
+        getServer().getPluginManager().registerEvents(new DropItemListener(this), this);
+        getServer().getPluginManager().registerEvents(new InteractListener(this), this);
 
         //endregion
     }

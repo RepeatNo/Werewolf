@@ -2,26 +2,33 @@ package at.ingameengine.listeners;
 
 import at.ingameengine.gamestates.states.*;
 import at.ingameengine.werewolf.Werewolf;
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
-public class QuitListener extends AListener {
-    public QuitListener(Werewolf plugin) {
+public class InteractListener extends AListener {
+
+    public InteractListener(Werewolf plugin) {
         super(plugin);
     }
 
-    PlayerQuitEvent event;
+    PlayerInteractEvent event;
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
+    public void onInteractEvent(PlayerInteractEvent event) {
         this.event = event;
-        event.setQuitMessage(null);
         gameStateManager.getGameState().accept(this);
     }
 
     @Override
     public void visit(SetupState state) {
-
+        Player player = (Player) event.getPlayer();
+        ItemStack item = player.getInventory().getItemInMainHand();
+        if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plugin.getConfigManager().readString("items.setup.name"))) {
+            player.sendMessage("Test");
+        }
     }
 
     @Override
@@ -49,3 +56,4 @@ public class QuitListener extends AListener {
 
     }
 }
+

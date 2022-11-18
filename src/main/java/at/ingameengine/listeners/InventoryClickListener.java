@@ -2,26 +2,33 @@ package at.ingameengine.listeners;
 
 import at.ingameengine.gamestates.states.*;
 import at.ingameengine.werewolf.Werewolf;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
-public class QuitListener extends AListener {
-    public QuitListener(Werewolf plugin) {
+public class InventoryClickListener extends AListener {
+
+    public InventoryClickListener(Werewolf plugin) {
         super(plugin);
     }
 
-    PlayerQuitEvent event;
+    InventoryClickEvent event;
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
+    public void onInventoryClickEvent(InventoryClickEvent event) {
         this.event = event;
-        event.setQuitMessage(null);
         gameStateManager.getGameState().accept(this);
     }
 
     @Override
     public void visit(SetupState state) {
-
+        Player player = (Player) event.getWhoClicked();
+        if(!(player.getGameMode() == GameMode.CREATIVE)) {
+            event.setCancelled(true);
+        }
     }
 
     @Override
@@ -49,3 +56,4 @@ public class QuitListener extends AListener {
 
     }
 }
+

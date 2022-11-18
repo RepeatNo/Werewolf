@@ -7,11 +7,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
-public class InventoryManager {
+public class ItemManager {
 
     public ItemStack getItem(Material material, int amount, String displayname)
     {
