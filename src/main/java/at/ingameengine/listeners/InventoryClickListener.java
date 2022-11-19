@@ -6,14 +6,11 @@ import at.ingameengine.utils.InventoryBuilder;
 import at.ingameengine.utils.InventoryFactory;
 import at.ingameengine.werewolf.Werewolf;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
+import java.util.Objects;
 
 public class InventoryClickListener extends AListener {
 
@@ -25,6 +22,7 @@ public class InventoryClickListener extends AListener {
 
     InventoryFactory inventoryFactory;
     InventoryBuilder inventoryBuilder;
+
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event) {
         this.event = event;
@@ -36,16 +34,22 @@ public class InventoryClickListener extends AListener {
     @Override
     public void visit(SetupState state) {
         Player player = (Player) event.getWhoClicked();
-        if(!(player.getGameMode() == GameMode.CREATIVE)) {
+
+        if (!(player.getGameMode() == GameMode.CREATIVE)) {
             event.setCancelled(true);
         }
 
         InventoryNode setup = inventoryFactory.getSetup();
 
-        if(inventoryBuilder.compareInventory(setup.getInventory(), event.getClickedInventory())) {
-            if(setup.getChildren().get(event.getCurrentItem().getItemMeta().getDisplayName()).getInventory() != null) {
-                player.openInventory(setup.getChildren().get(event.getCurrentItem().getItemMeta().getDisplayName()).getInventory());
-            }
+        if (event.getCurrentItem() == null) return;
+        InventoryNode clickedInventory = setup.getChildren().get(event.getCurrentItem().getItemMeta().getDisplayName());
+
+        if (inventoryBuilder.compareInventory(setup.getInventory(), Objects.requireNonNull(event.getClickedInventory()))) {
+            if (clickedInventory == null) return;
+            if (clickedInventory.getInventory() == null)
+                return;
+            player.openInventory(clickedInventory.getInventory());
+
         }
     }
 
