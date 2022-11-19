@@ -1,10 +1,10 @@
 package at.ingameengine.listeners;
 
+import at.ingameengine.entities.InventoryNode;
 import at.ingameengine.gamestates.states.*;
-import at.ingameengine.utils.InventoryManager;
+import at.ingameengine.utils.InventoryBuilder;
+import at.ingameengine.utils.InventoryFactory;
 import at.ingameengine.werewolf.Werewolf;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -17,10 +17,12 @@ public class InteractListener extends AListener {
     }
 
     PlayerInteractEvent event;
+    InventoryFactory inventoryFactory;
 
     @EventHandler
     public void onInteractEvent(PlayerInteractEvent event) {
         this.event = event;
+        this.inventoryFactory = new InventoryFactory(plugin);
         gameStateManager.getGameState().accept(this);
     }
 
@@ -28,13 +30,13 @@ public class InteractListener extends AListener {
     public void visit(SetupState state) {
         Player player = (Player) event.getPlayer();
         ItemStack item = player.getInventory().getItemInMainHand();
-        InventoryManager inventoryManager = new InventoryManager(plugin);
 
         if(item.getItemMeta() == null || item.getItemMeta().getDisplayName() == null)
             return;
 
         if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plugin.getConfigManager().readString("items.setup.name"))) {
-            player.openInventory(inventoryManager.openGameProfileInventory());
+            InventoryNode setupNode = inventoryFactory.getSetup();
+            player.openInventory(setupNode.getInventory());
         }
     }
 

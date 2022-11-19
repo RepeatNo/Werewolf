@@ -21,6 +21,7 @@ public class Werewolf extends JavaPlugin {
     private FileManager configManager;
     private FileManager messageManager;
     private FileManager gameProfileManager;
+    private FileManager skullManager;
     private ArrayList<WerewolfPlayer> players;
 
     private GameProfile gameProfile;
@@ -32,9 +33,16 @@ public class Werewolf extends JavaPlugin {
         gameStateManager = new GameStateManager(this);
         gameStateManager.setGameState(AGameState.SETUP_STATE);
         roleManager = new RoleManager(this);
+
+        //region Configs
         configManager = new FileManager(this, "config.yml");
         messageManager = new FileManager(this, "messages.yml");
         gameProfileManager = new FileManager(this, "game-profiles.yml");
+        skullManager = new FileManager(this, "skulls.yml");
+
+        //endregion
+
+
         gameProfile = new GameProfile(this, configManager.readString("game-profile"));
 
         //region FileManager
@@ -77,6 +85,9 @@ public class Werewolf extends JavaPlugin {
 
     public FileManager getConfigManager() {
         return configManager;
+    }
+    public FileManager getSkullManager() {
+        return skullManager;
     }
 
     public FileManager getGameProfileManager() {
