@@ -45,7 +45,7 @@ public class Werewolf extends JavaPlugin {
 
         gameProfile = new GameProfile(this, configManager.readString("game-profile"));
 
-        //region FileManager
+        //region ConfigElements
 
         prefix = messageManager.readString("prefix");
 
@@ -86,6 +86,7 @@ public class Werewolf extends JavaPlugin {
     public FileManager getConfigManager() {
         return configManager;
     }
+
     public FileManager getSkullManager() {
         return skullManager;
     }
@@ -93,6 +94,7 @@ public class Werewolf extends JavaPlugin {
     public FileManager getGameProfileManager() {
         return gameProfileManager;
     }
+
     public FileManager getMessageManager() {
         return messageManager;
     }
