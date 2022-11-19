@@ -1,6 +1,7 @@
 package at.ingameengine.werewolf;
 
 import at.ingameengine.commands.implementations.TestCommand;
+import at.ingameengine.entities.GameProfile;
 import at.ingameengine.entities.WerewolfPlayer;
 import at.ingameengine.gamestates.AGameState;
 import at.ingameengine.gamestates.GameStateManager;
@@ -19,7 +20,10 @@ public class Werewolf extends JavaPlugin {
     private RoleManager roleManager;
     private FileManager configManager;
     private FileManager messageManager;
+    private FileManager gameProfileManager;
     private ArrayList<WerewolfPlayer> players;
+
+    private GameProfile gameProfile;
 
     @Override
     public void onEnable() {
@@ -30,6 +34,8 @@ public class Werewolf extends JavaPlugin {
         roleManager = new RoleManager(this);
         configManager = new FileManager(this, "config.yml");
         messageManager = new FileManager(this, "messages.yml");
+        gameProfileManager = new FileManager(this, "game-profiles.yml");
+        gameProfile = new GameProfile(this, configManager.readString("game-profile"));
 
         //region FileManager
 
@@ -51,6 +57,7 @@ public class Werewolf extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
         getServer().getPluginManager().registerEvents(new DropItemListener(this), this);
         getServer().getPluginManager().registerEvents(new InteractListener(this), this);
+        getServer().getPluginManager().registerEvents(new CancelledListeners(this), this);
 
         //endregion
     }
@@ -71,6 +78,10 @@ public class Werewolf extends JavaPlugin {
     public FileManager getConfigManager() {
         return configManager;
     }
+
+    public FileManager getGameProfileManager() {
+        return gameProfileManager;
+    }
     public FileManager getMessageManager() {
         return messageManager;
     }
@@ -85,5 +96,9 @@ public class Werewolf extends JavaPlugin {
 
     public void removePlayer(WerewolfPlayer player) {
         this.players.remove(player);
+    }
+
+    public GameProfile getGameProfile() {
+        return gameProfile;
     }
 }

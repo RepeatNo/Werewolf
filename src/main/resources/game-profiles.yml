@@ -1,0 +1,46 @@
+#Gameprofiles
+
+4:
+  werewolf: 1
+  villager: 1
+  hunter: 1
+  seer: 1
+5:
+  werewolf: 1
+  hunter: 1
+  seer: 1
+  villager: 2
+6:
+  werewolf: 2
+  doctor: 1
+  hunter: 1
+  seer: 1
+  villager: 1
+7:
+  werewolf: 2
+  doctor: 1
+  hunter: 1
+  witch: 1
+  seer: 1
+  villager: 1
+8:
+  werewolf: 2
+  doctor: 1
+  seer: 1
+  witch: 1
+  hunter: 1
+  villager: 2
+9:
+  werewolf: 3
+  doctor: 1
+  seer: 1
+  witch: 1
+  hunter: 1
+  villager: 2
+10:
+  werewolf: 3
+  doctor: 1
+  seer: 1
+  witch: 1
+  hunter: 1
+  villager: 3

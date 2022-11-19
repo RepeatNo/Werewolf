@@ -7,6 +7,7 @@
 permissions:
   admin: "werewolf.admin"
 
+game-profile: "default"
 
 items:
   setup:

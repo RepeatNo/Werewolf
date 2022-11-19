@@ -1,7 +1,9 @@
 package at.ingameengine.listeners;
 
 import at.ingameengine.gamestates.states.*;
+import at.ingameengine.utils.InventoryManager;
 import at.ingameengine.werewolf.Werewolf;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,8 +28,13 @@ public class InteractListener extends AListener {
     public void visit(SetupState state) {
         Player player = (Player) event.getPlayer();
         ItemStack item = player.getInventory().getItemInMainHand();
+        InventoryManager inventoryManager = new InventoryManager(plugin);
+
+        if(item.getItemMeta() == null || item.getItemMeta().getDisplayName() == null)
+            return;
+
         if(item.getItemMeta().getDisplayName().equalsIgnoreCase(plugin.getConfigManager().readString("items.setup.name"))) {
-            player.sendMessage("Test");
+            player.openInventory(inventoryManager.openGameProfileInventory());
         }
     }
 
