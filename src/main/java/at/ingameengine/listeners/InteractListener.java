@@ -1,6 +1,6 @@
 package at.ingameengine.listeners;
 
-import at.ingameengine.entities.InventoryNode;
+import at.ingameengine.entities.inventory.InventoryNode;
 import at.ingameengine.gamestates.states.*;
 import at.ingameengine.utils.InventoryFactory;
 import at.ingameengine.werewolf.Werewolf;

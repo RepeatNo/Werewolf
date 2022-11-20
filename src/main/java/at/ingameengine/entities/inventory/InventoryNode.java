@@ -1,4 +1,4 @@
-package at.ingameengine.entities;
+package at.ingameengine.entities.inventory;
 
 import at.ingameengine.utils.InventoryBuilder;
 import org.bukkit.inventory.Inventory;
@@ -11,6 +11,7 @@ public class InventoryNode {
     private final String title;
     private InventoryNode parent = null;
     private HashSet<InventoryNode> children = new HashSet<>();
+    private final HashSet<AInventoryButton> buttons = new HashSet<>();
 
     public InventoryNode(String title, Inventory inventory, InventoryNode parent, HashSet<InventoryNode> children) {
         this.inventory = inventory;

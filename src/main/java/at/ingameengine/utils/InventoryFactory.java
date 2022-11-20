@@ -1,6 +1,6 @@
 package at.ingameengine.utils;
 
-import at.ingameengine.entities.InventoryNode;
+import at.ingameengine.entities.inventory.InventoryNode;
 import at.ingameengine.werewolf.Werewolf;
 
 public class InventoryFactory {
