@@ -16,6 +16,24 @@ public class InventoryBuilder {
         this.plugin = plugin;
     }
 
+    public static Boolean compareInventory(Inventory inventory, Inventory compareInventory) {
+        if (inventory.getSize() != compareInventory.getSize()) {
+            return false;
+        }
+
+        if (inventory.getType() != compareInventory.getType()) {
+            return false;
+        }
+
+        for (int i = 0; i < inventory.getSize(); i++) {
+            if (!inventory.getItem(i).getItemMeta().getDisplayName().equalsIgnoreCase(compareInventory.getItem(i).getItemMeta().getDisplayName())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public Inventory setupInventory() {
         HashMap<Pair<Integer, Integer>, ItemStack> items = new HashMap<Pair<Integer, Integer>, ItemStack>();
         items.put(
@@ -51,6 +69,19 @@ public class InventoryBuilder {
         return buildInventory(9 * 4, "§eGame Profiles", items);
     }
 
+    public Inventory spawnsInventory() {
+        HashMap<Pair<Integer, Integer>, ItemStack> items = new HashMap<Pair<Integer, Integer>, ItemStack>() {{
+            put(new Pair<>(2, 3), new ItemManager().getItem(Material.NETHER_STAR, 1, "§eSet Spawn"));
+            put(new Pair<>(2, 5), new ItemManager().getItem(Material.SPAWNER, 1, "§eSet Deine Mum"));
+        }};
+
+        return buildInventory(9 * 3, "§eSpawns", items);
+    }
+
+    private Integer getPosition(Integer row, Integer column) {
+        return (row - 1) * 9 + (column - 1);
+    }
+
     private Inventory buildInventory(Integer size, String title, HashMap<Pair<Integer, Integer>, ItemStack> items) {
         Inventory inventory = plugin.getServer().createInventory(null, size, title);
 
@@ -62,28 +93,8 @@ public class InventoryBuilder {
             inventory.setItem(getPosition(pair.getValue0(), pair.getValue1()), items.get(pair));
         }
 
+        inventory.setItem(size - 1, new ItemManager().getItem(Material.BARRIER, 1, "§cBack"));
+
         return inventory;
-    }
-
-    private Integer getPosition(Integer row, Integer column) {
-        return (row - 1) * 9 + (column - 1);
-    }
-
-    public Boolean compareInventory(Inventory inventory, Inventory compareInventory) {
-        if (inventory.getSize() != compareInventory.getSize()) {
-            return false;
-        }
-
-        if (inventory.getType() != compareInventory.getType()) {
-            return false;
-        }
-
-        for (int i = 0; i < inventory.getSize(); i++) {
-            if (!inventory.getItem(i).getItemMeta().getDisplayName().equalsIgnoreCase(compareInventory.getItem(i).getItemMeta().getDisplayName())) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

@@ -10,8 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-import java.util.Objects;
-
 public class InventoryClickListener extends AListener {
 
     public InventoryClickListener(Werewolf plugin) {
@@ -39,17 +37,25 @@ public class InventoryClickListener extends AListener {
             event.setCancelled(true);
         }
 
+        if (event.getCurrentItem() == null) return;
+
         InventoryNode setup = inventoryFactory.getSetup();
 
-        if (event.getCurrentItem() == null) return;
-        InventoryNode clickedInventory = setup.getChildren().get(event.getCurrentItem().getItemMeta().getDisplayName());
+        String itemName = event.getCurrentItem().getItemMeta().getDisplayName();
 
-        if (inventoryBuilder.compareInventory(setup.getInventory(), Objects.requireNonNull(event.getClickedInventory()))) {
+        if (itemName.equalsIgnoreCase("§cBack")) {
+            InventoryNode parent = setup.getNode(event.getInventory()).getParent();
+            if (parent == null) return;
+            player.openInventory(parent.getInventory());
+            return;
+        }
+
+        InventoryNode clickedInventory = setup
+                .getNode(event.getCurrentItem().getItemMeta().getDisplayName());
+
+        if (InventoryBuilder.compareInventory(setup.getInventory(), event.getClickedInventory())) {
             if (clickedInventory == null) return;
-            if (clickedInventory.getInventory() == null)
-                return;
             player.openInventory(clickedInventory.getInventory());
-
         }
     }
 

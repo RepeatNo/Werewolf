@@ -1,21 +1,27 @@
 package at.ingameengine.entities;
 
+import at.ingameengine.utils.InventoryBuilder;
 import org.bukkit.inventory.Inventory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 
 public class InventoryNode {
 
-    private Inventory inventory;
-    private int size;
-    private InventoryNode parent;
-    private HashMap<String, InventoryNode> children;
+    private final Inventory inventory;
+    private final String title;
+    private InventoryNode parent = null;
+    private HashSet<InventoryNode> children = new HashSet<>();
 
-    public InventoryNode(Inventory inventory, InventoryNode parent, HashMap<String, InventoryNode> children) {
+    public InventoryNode(String title, Inventory inventory, InventoryNode parent, HashSet<InventoryNode> children) {
         this.inventory = inventory;
         this.parent = parent;
         this.children = children;
+        this.title = title;
+    }
+
+    public InventoryNode(String title, Inventory inventory) {
+        this.inventory = inventory;
+        this.title = title;
     }
 
     public Inventory getInventory() {
@@ -26,11 +32,44 @@ public class InventoryNode {
         return parent;
     }
 
-    public HashMap<String, InventoryNode> getChildren() {
+    public HashSet<InventoryNode> getChildren() {
         return children;
     }
 
-    public void addChild(String displayName,InventoryNode child) {
-        children.put(displayName, child);
+    public void addChild(InventoryNode child) {
+        children.add(child);
+        child.setParent(this);
+    }
+
+    private void setParent(InventoryNode inventoryNode) {
+        this.parent = inventoryNode;
+    }
+
+    public InventoryNode getNode(String displayName) {
+        if (title.equalsIgnoreCase(displayName)) {
+            return this;
+        }
+
+        for (InventoryNode child : children) {
+            if (child.getNode(displayName) != null) {
+                return child.getNode(displayName);
+            }
+        }
+
+        return null;
+    }
+
+    public InventoryNode getNode(Inventory inventory) {
+        if (InventoryBuilder.compareInventory(this.inventory, inventory)) {
+            return this;
+        }
+
+        for (InventoryNode child : children) {
+            if (child.getNode(inventory) != null) {
+                return child.getNode(inventory);
+            }
+        }
+
+        return null;
     }
 }

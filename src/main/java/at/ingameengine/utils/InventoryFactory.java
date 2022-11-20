@@ -3,9 +3,6 @@ package at.ingameengine.utils;
 import at.ingameengine.entities.InventoryNode;
 import at.ingameengine.werewolf.Werewolf;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class InventoryFactory {
 
     Werewolf plugin;
@@ -17,12 +14,17 @@ public class InventoryFactory {
     }
 
 
-    public InventoryNode getSetup(){
-        HashMap<String, InventoryNode> setupChildren = new HashMap<String, InventoryNode>();
-        setupChildren.put("§eGame Profiles",new InventoryNode(inventoryManager.GameProfileInventory(), null, null));
+    public InventoryNode getSetup() {
+        InventoryNode setupRoot = new InventoryNode("§eSetup", inventoryManager.setupInventory());
 
-        InventoryNode setup = new InventoryNode(inventoryManager.setupInventory(),null, setupChildren);
-        return setup;
+        InventoryNode gameProfiles = new InventoryNode("§eGame Profiles", inventoryManager.GameProfileInventory());
+        setupRoot.addChild(gameProfiles);
+        InventoryNode spawns = new InventoryNode("§eSpawns", inventoryManager.spawnsInventory());
+        setupRoot.addChild(spawns);
+        InventoryNode basics = new InventoryNode("§eBasics", inventoryManager.GameProfileInventory());
+        setupRoot.addChild(basics);
+
+        return setupRoot;
     }
 
 }
