@@ -5,11 +5,9 @@ import at.ingameengine.entities.inventory.InventoryNode;
 import at.ingameengine.entities.inventory.button.*;
 import at.ingameengine.werewolf.Werewolf;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 import org.javatuples.Pair;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class InventoryFactory {
 
@@ -24,7 +22,7 @@ public class InventoryFactory {
     //region Inventories
 
     public InventoryNode setupInventoryNode() {
-        Pair<Integer, Integer> size = new Pair<>(5, 9);
+        Pair<Integer, Integer> size = new Pair<>(6, 9);
         ArrayList<AInventoryButton> invButtons = new ArrayList<AInventoryButton>() {
             {
                 add(new PlaceholderInvButton(new Pair<>(1, 1), "§eProfile §6» §c" + plugin.getGameProfile().getName(),
@@ -39,7 +37,7 @@ public class InventoryFactory {
             }
         };
 
-        return buildInventoryNode("§eSetup", size, invButtons);
+        return inventoryBuilder.buildInventoryNode("§eSetup", size, invButtons);
     }
 
     public InventoryNode gameProfileInventoryNode() {
@@ -66,7 +64,7 @@ public class InventoryFactory {
             }
         };
 
-        return buildInventoryNode("§eGame Profiles", size, invButtons);
+        return inventoryBuilder.buildInventoryNode("§eGame Profiles", size, invButtons);
     }
 
     public InventoryNode spawnsInventoryNode() {
@@ -81,22 +79,11 @@ public class InventoryFactory {
             }
         };
 
-        return buildInventoryNode("§eSpawns", size, invButtons);
+        return inventoryBuilder.buildInventoryNode("§eSpawns", size, invButtons);
     }
 
     public InventoryNode votingInventoryNode() {
         Pair<Integer, Integer> size = new Pair<>(5, 9);
-
-        HashMap<Pair<Integer, Integer>, ItemStack> items = new HashMap<Pair<Integer, Integer>, ItemStack>() {{
-            Integer row = 1;
-            for (int i = 0; i < plugin.getPlayers().size(); i++) {
-                WerewolfPlayer player = plugin.getPlayers().get(i);
-                put(new Pair<>(row, i + 1 - ((row - 1) * 7)), new ItemManager().getHead(player.getPlayer(), "§eVote for " + player.getPlayer().getName()));
-                if (i % 7 == 0) {
-                    row++;
-                }
-            }
-        }};
 
         ArrayList<AInventoryButton> invButtons = new ArrayList<AInventoryButton>() {
             {
@@ -113,7 +100,7 @@ public class InventoryFactory {
             }
         };
 
-        return buildInventoryNode("§eVoting Menu", size, invButtons);
+        return inventoryBuilder.buildInventoryNode("§eVoting Menu", size, invButtons);
     }
 
     //endregion
@@ -131,21 +118,6 @@ public class InventoryFactory {
         setupRoot.addChild(basics);
 
         return setupRoot;
-    }
-
-    public InventoryNode buildInventoryNode(String title, Pair<Integer, Integer> size, ArrayList<AInventoryButton> invButtons) {
-        InventoryNode node = new InventoryNode(title);
-
-        for (AInventoryButton invButton : invButtons) {
-            node.addInvButton(invButton);
-        }
-
-        node.setInventory(inventoryBuilder.buildInventory(
-                size.getValue0() * size.getValue1(),
-                title,
-                node.getInvButtons()));
-
-        return node;
     }
 
     //endregion

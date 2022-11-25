@@ -10,6 +10,7 @@ import at.ingameengine.role.RoleManager;
 import at.ingameengine.utils.FileManager;
 import at.ingameengine.utils.InventoryBuilder;
 import at.ingameengine.utils.InventoryFactory;
+import at.ingameengine.utils.VotingManager;
 import org.bukkit.GameRule;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,18 +19,20 @@ import java.util.Objects;
 
 public class Werewolf extends JavaPlugin {
 
-    private GameStateManager gameStateManager;
     public static String prefix;
-    private RoleManager roleManager;
-    private FileManager configManager;
-    private FileManager messageManager;
-    private FileManager gameProfileManager;
-    private FileManager skullManager;
     private ArrayList<WerewolfPlayer> players;
 
     private GameProfile gameProfile;
     private InventoryFactory inventoryFactory;
     private InventoryBuilder inventoryBuilder;
+
+    private VotingManager votingManager;
+    private GameStateManager gameStateManager;
+    private RoleManager roleManager;
+    private FileManager configManager;
+    private FileManager messageManager;
+    private FileManager gameProfileManager;
+    private FileManager skullManager;
 
     @Override
     public void onEnable() {
@@ -38,6 +41,7 @@ public class Werewolf extends JavaPlugin {
         gameStateManager = new GameStateManager(this);
         gameStateManager.setGameState(AGameState.SETUP_STATE);
         roleManager = new RoleManager(this);
+        votingManager = new VotingManager(this);
 
         //region Configs
         configManager = new FileManager(this, "config.yml");
@@ -133,5 +137,9 @@ public class Werewolf extends JavaPlugin {
 
     public InventoryBuilder getInventoryBuilder() {
         return inventoryBuilder;
+    }
+
+    public VotingManager getVotingManager() {
+        return votingManager;
     }
 }

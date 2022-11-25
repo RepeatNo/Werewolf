@@ -1,52 +1,32 @@
 package at.ingameengine.utils;
 
+import at.ingameengine.entities.Votes;
 import at.ingameengine.entities.WerewolfPlayer;
 import at.ingameengine.werewolf.Werewolf;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Optional;
 
 public class VotingManager {
     private final Werewolf plugin;
-    private final HashMap<WerewolfPlayer, Integer> votes;
+    private final ArrayList<Votes> votes;
 
     public VotingManager(Werewolf plugin) {
         this.plugin = plugin;
-        votes = new HashMap<>();
+        votes = new ArrayList<>();
     }
 
-    public void addVote(WerewolfPlayer target) {
-        for (WerewolfPlayer player : votes.keySet()) {
-            if (player.equals(target)) {
-                votes.put(player, votes.get(player) + 1);
-                return;
-            }
+    public void addVote(WerewolfPlayer player, WerewolfPlayer target) {
+        for (Votes vote : votes) {
+            if (vote.ContainsPlayer(player)) vote.removeVote(player);
+            if (vote.getTarget() == target) vote.addVote(player);
         }
     }
 
     public void getMostVotedPlayer() {
-        int max = 0;
-        HashSet<WerewolfPlayer> player = new HashSet<>();
-        for (WerewolfPlayer werewolfPlayer : votes.keySet()) {
-            if (votes.get(werewolfPlayer) == max) {
-                max = votes.get(werewolfPlayer);
-                player.add(werewolfPlayer);
-            }
-
-            if (votes.get(werewolfPlayer) > max) {
-                max = votes.get(werewolfPlayer);
-                player.clear();
-                player.add(werewolfPlayer);
-            }
-        }
-    }
-
-    public void openVotingInventory() {
-        ArrayList<WerewolfPlayer> players = plugin.getPlayers();
-        for (WerewolfPlayer player : players) {
-            votes.put(player, 0);
-        }
+        Optional<Votes> mostVotedCount = votes.stream().max((o1, o2) -> o1.getVotesCount() - o2.getVotesCount());
+        Bukkit.broadcastMessage(mostVotedCount.get().getTarget().getPlayer().getName());
     }
 
     public void openVotingInventory(ArrayList<WerewolfPlayer> players) {
