@@ -1,27 +1,36 @@
 package at.ingameengine.entities.inventory;
 
-import at.ingameengine.utils.InventoryBuilder;
+import at.ingameengine.entities.inventory.button.AInventoryButton;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.javatuples.Pair;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class InventoryNode {
 
-    private final Inventory inventory;
     private final String title;
-    private InventoryNode parent = null;
-    private HashSet<InventoryNode> children = new HashSet<>();
-    private final HashSet<AInventoryButton> buttons = new HashSet<>();
 
-    public InventoryNode(String title, Inventory inventory, InventoryNode parent, HashSet<InventoryNode> children) {
+    private Inventory inventory;
+    private InventoryNode parent = null;
+    private ArrayList<InventoryNode> children = new ArrayList<>();
+    private ArrayList<AInventoryButton> invButtons = new ArrayList<>();
+
+    public InventoryNode(String title, Inventory inventory, InventoryNode parent, ArrayList<InventoryNode> children, ArrayList<AInventoryButton> invButtons) {
         this.inventory = inventory;
         this.parent = parent;
         this.children = children;
         this.title = title;
+        this.invButtons = invButtons;
     }
 
-    public InventoryNode(String title, Inventory inventory) {
+    public InventoryNode(String title, Inventory inventory, ArrayList<AInventoryButton> invButtons) {
         this.inventory = inventory;
+        this.title = title;
+        this.invButtons = invButtons;
+    }
+
+    public InventoryNode(String title) {
         this.title = title;
     }
 
@@ -33,8 +42,12 @@ public class InventoryNode {
         return parent;
     }
 
-    public HashSet<InventoryNode> getChildren() {
+    public ArrayList<InventoryNode> getChildren() {
         return children;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void addChild(InventoryNode child) {
@@ -42,8 +55,30 @@ public class InventoryNode {
         child.setParent(this);
     }
 
+    public void addInvButton(AInventoryButton button) {
+        button.SetNode(this);
+        invButtons.add(button);
+    }
+
+    public ArrayList<AInventoryButton> getInvButtons() {
+        return invButtons;
+    }
+
+    public AInventoryButton getInventoryButton(ItemStack itemStack) {
+        for (AInventoryButton invButton : invButtons) {
+            if (invButton.getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase(itemStack.getItemMeta().getDisplayName())) {
+                return invButton;
+            }
+        }
+        return null;
+    }
+
     private void setParent(InventoryNode inventoryNode) {
         this.parent = inventoryNode;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
     public InventoryNode getNode(String displayName) {
@@ -61,7 +96,7 @@ public class InventoryNode {
     }
 
     public InventoryNode getNode(Inventory inventory) {
-        if (InventoryBuilder.compareInventory(this.inventory, inventory)) {
+        if (compare(inventory)) {
             return this;
         }
 
@@ -73,4 +108,29 @@ public class InventoryNode {
 
         return null;
     }
+
+    public Boolean compare(Inventory compareInventory) {
+        if (inventory.getSize() != compareInventory.getSize()) {
+            return false;
+        }
+
+        if (inventory.getType() != compareInventory.getType()) {
+            return false;
+        }
+
+        for (int i = 0; i < inventory.getSize(); i++) {
+            if (ItemNameIsNotEqual(new Pair<>(inventory.getItem(i), compareInventory.getItem(i)))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private Boolean ItemNameIsNotEqual(Pair<ItemStack, ItemStack> itemStackPair) {
+        return !itemStackPair.getValue0().getItemMeta().getDisplayName()
+                .equalsIgnoreCase(itemStackPair.getValue1().getItemMeta().getDisplayName());
+    }
+
+
 }

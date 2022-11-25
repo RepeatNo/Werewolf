@@ -33,7 +33,7 @@ public class InteractListener extends AListener {
         if (item.getItemMeta() == null) return;
 
         if (item.getItemMeta().getDisplayName().equalsIgnoreCase(plugin.getConfigManager().readString("items.setup.name"))) {
-            InventoryNode setupNode = inventoryFactory.getSetup();
+            InventoryNode setupNode = inventoryFactory.getSetupRootNode();
             player.openInventory(setupNode.getInventory());
         }
     }

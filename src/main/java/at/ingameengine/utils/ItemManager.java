@@ -1,17 +1,16 @@
 package at.ingameengine.utils;
 
+import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import com.mojang.authlib.GameProfile;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.UUID;
 
 public class ItemManager {
@@ -36,7 +35,6 @@ public class ItemManager {
     }
 
     public ItemStack getHead(Player player,String displayName) {
-        int lifePlayer = (int) player.getHealth();
         ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
         SkullMeta skull = (SkullMeta) item.getItemMeta();
         skull.setDisplayName(displayName);

@@ -1,6 +1,7 @@
 package at.ingameengine.listeners;
 
 import at.ingameengine.entities.inventory.InventoryNode;
+import at.ingameengine.entities.inventory.button.AInventoryButton;
 import at.ingameengine.gamestates.states.*;
 import at.ingameengine.utils.InventoryBuilder;
 import at.ingameengine.utils.InventoryFactory;
@@ -24,8 +25,8 @@ public class InventoryClickListener extends AListener {
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event) {
         this.event = event;
-        this.inventoryFactory = new InventoryFactory(plugin);
-        this.inventoryBuilder = new InventoryBuilder(plugin);
+        this.inventoryFactory = plugin.getInventoryFactory();
+        this.inventoryBuilder = plugin.getInventoryBuilder();
         gameStateManager.getGameState().accept(this);
     }
 
@@ -33,30 +34,27 @@ public class InventoryClickListener extends AListener {
     public void visit(SetupState state) {
         Player player = (Player) event.getWhoClicked();
 
-        if (!(player.getGameMode() == GameMode.CREATIVE)) {
-            event.setCancelled(true);
-        }
-
+        if (!(player.getGameMode() == GameMode.CREATIVE)) event.setCancelled(true);
         if (event.getCurrentItem() == null) return;
 
-        InventoryNode setup = inventoryFactory.getSetup();
+        InventoryNode setup = inventoryFactory.getSetupRootNode();
 
-        String itemName = event.getCurrentItem().getItemMeta().getDisplayName();
+        InventoryNode clickedInventory = setup
+                .getNode(event.getInventory());
+        if (clickedInventory == null) return;
 
-        if (itemName.equalsIgnoreCase("§cBack")) {
+        AInventoryButton invButton = clickedInventory.getInventoryButton(event.getCurrentItem());
+        if (invButton == null) return;
+        invButton.Execute(event);
+
+        //player.openInventory(clickedInventory.getInventory());
+
+        /*if (itemName.equalsIgnoreCase("§cBack")) {
             InventoryNode parent = setup.getNode(event.getInventory()).getParent();
             if (parent == null) return;
             player.openInventory(parent.getInventory());
             return;
-        }
-
-        InventoryNode clickedInventory = setup
-                .getNode(event.getCurrentItem().getItemMeta().getDisplayName());
-
-        if (InventoryBuilder.compareInventory(setup.getInventory(), event.getClickedInventory())) {
-            if (clickedInventory == null) return;
-            player.openInventory(clickedInventory.getInventory());
-        }
+        }*/
     }
 
     @Override
