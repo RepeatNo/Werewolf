@@ -8,6 +8,9 @@ import at.ingameengine.gamestates.GameStateManager;
 import at.ingameengine.listeners.*;
 import at.ingameengine.role.RoleManager;
 import at.ingameengine.utils.FileManager;
+import at.ingameengine.utils.InventoryBuilder;
+import at.ingameengine.utils.InventoryFactory;
+import org.bukkit.GameRule;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -25,6 +28,8 @@ public class Werewolf extends JavaPlugin {
     private ArrayList<WerewolfPlayer> players;
 
     private GameProfile gameProfile;
+    private InventoryFactory inventoryFactory;
+    private InventoryBuilder inventoryBuilder;
 
     @Override
     public void onEnable() {
@@ -42,7 +47,8 @@ public class Werewolf extends JavaPlugin {
 
         //endregion
 
-
+        inventoryBuilder = new InventoryBuilder(this);
+        inventoryFactory = new InventoryFactory(this);
         gameProfile = new GameProfile(this, configManager.readString("game-profile"));
 
         //region ConfigElements
@@ -66,6 +72,12 @@ public class Werewolf extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DropItemListener(this), this);
         getServer().getPluginManager().registerEvents(new InteractListener(this), this);
         getServer().getPluginManager().registerEvents(new CancelledListeners(this), this);
+
+        //endregion
+
+        //region GameRules
+
+        getServer().getWorlds().get(0).setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
 
         //endregion
     }
@@ -113,5 +125,13 @@ public class Werewolf extends JavaPlugin {
 
     public GameProfile getGameProfile() {
         return gameProfile;
+    }
+
+    public InventoryFactory getInventoryFactory() {
+        return inventoryFactory;
+    }
+
+    public InventoryBuilder getInventoryBuilder() {
+        return inventoryBuilder;
     }
 }
