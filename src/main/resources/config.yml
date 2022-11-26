@@ -1,0 +1,16 @@
+#Werewolf Plugin
+#By: NoRepeat & Minegt
+#Version: 1.0
+#Description: A plugin that allows you to play the game of Werewolf in Minecraft!
+
+#Permissions
+permissions:
+  admin: "werewolf.admin"
+
+game-profile: "default"
+
+items:
+  setup:
+    name: "&6Setup"
+    material: "BLAZE_ROD"
+    slot: 5
