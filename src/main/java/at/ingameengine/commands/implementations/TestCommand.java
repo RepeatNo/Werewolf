@@ -5,6 +5,7 @@ import at.ingameengine.gamestates.states.*;
 import at.ingameengine.werewolf.Werewolf;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class TestCommand extends ACommand {
     public TestCommand(Werewolf plugin) {
@@ -44,6 +45,11 @@ public class TestCommand extends ACommand {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         gameStateManager.getGameState().accept(this);
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            player.openInventory(plugin.getInventoryFactory().votingInventoryNode().getInventory());
+        }
+
         return true;
     }
 }

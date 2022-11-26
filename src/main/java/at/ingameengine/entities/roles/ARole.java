@@ -2,13 +2,11 @@ package at.ingameengine.entities.roles;
 
 public abstract class ARole {
 
+    public abstract void executeSetup();
 
-    public void votingNight() {
+    public abstract void executeNight();
 
-    }
-
-    public void votingDay() {
-
+    public void executeDay() {
     }
 
     public void onDeath() {

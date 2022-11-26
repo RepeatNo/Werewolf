@@ -1,6 +1,7 @@
 package at.ingameengine.utils;
 
 import at.ingameengine.werewolf.Werewolf;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -78,6 +79,10 @@ public class FileManager {
 
     public String readString(String name) {
         return replaceConfigurationChars(getFileConfiguration().getString(name));
+    }
+
+    public Material readMaterial(String name) {
+        return Material.getMaterial(getFileConfiguration().getString(name));
     }
 
     public Integer readInt(String name) {

@@ -5,13 +5,17 @@ import at.ingameengine.entities.roles.Villager;
 import at.ingameengine.entities.roles.WerewolfEntity;
 import at.ingameengine.gamestates.AGameState;
 import at.ingameengine.gamestates.IGameStateVisitor;
+import at.ingameengine.utils.VotingManager;
 import at.ingameengine.werewolf.Werewolf;
 
 import java.util.HashMap;
 
 public class LobbyState extends AGameState {
+    VotingManager votingManager;
+
     public LobbyState(Werewolf plugin) {
         super(plugin);
+        votingManager = new VotingManager(plugin);
     }
 
     @Override
