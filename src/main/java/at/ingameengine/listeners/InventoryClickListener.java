@@ -18,6 +18,7 @@ public class InventoryClickListener extends AListener {
     }
 
     InventoryClickEvent event;
+    Player player;
 
     InventoryFactory inventoryFactory;
     InventoryBuilder inventoryBuilder;
@@ -27,16 +28,16 @@ public class InventoryClickListener extends AListener {
         this.event = event;
         this.inventoryFactory = plugin.getInventoryFactory();
         this.inventoryBuilder = plugin.getInventoryBuilder();
+
+        player = (Player) event.getWhoClicked();
+        if (!(player.getGameMode() == GameMode.CREATIVE)) event.setCancelled(true);
+        if (event.getCurrentItem() == null) return;
+
         gameStateManager.getGameState().accept(this);
     }
 
     @Override
     public void visit(SetupState state) {
-        Player player = (Player) event.getWhoClicked();
-
-        if (!(player.getGameMode() == GameMode.CREATIVE)) event.setCancelled(true);
-        if (event.getCurrentItem() == null) return;
-
         InventoryNode setup = inventoryFactory.getSetupRootNode();
 
         InventoryNode clickedInventory = setup
@@ -45,16 +46,7 @@ public class InventoryClickListener extends AListener {
 
         AInventoryButton invButton = clickedInventory.getInventoryButton(event.getCurrentItem());
         if (invButton == null) return;
-        invButton.Execute(event);
-
-        //player.openInventory(clickedInventory.getInventory());
-
-        /*if (itemName.equalsIgnoreCase("§cBack")) {
-            InventoryNode parent = setup.getNode(event.getInventory()).getParent();
-            if (parent == null) return;
-            player.openInventory(parent.getInventory());
-            return;
-        }*/
+        invButton.Execute(plugin, event);
     }
 
     @Override
@@ -64,7 +56,14 @@ public class InventoryClickListener extends AListener {
 
     @Override
     public void visit(DayState state) {
+        InventoryNode voting = inventoryFactory.votingInventoryNode();
+        InventoryNode clickedInventory = voting
+                .getNode(event.getInventory());
+        if (clickedInventory == null) return;
 
+        AInventoryButton invButton = clickedInventory.getInventoryButton(event.getCurrentItem());
+        if (invButton == null) return;
+        invButton.Execute(plugin, event);
     }
 
     @Override

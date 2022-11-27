@@ -1,6 +1,7 @@
 package at.ingameengine.werewolf;
 
 import at.ingameengine.commands.implementations.TestCommand;
+import at.ingameengine.commands.implementations.VoteCommand;
 import at.ingameengine.entities.GameProfile;
 import at.ingameengine.entities.WerewolfPlayer;
 import at.ingameengine.gamestates.AGameState;
@@ -64,6 +65,7 @@ public class Werewolf extends JavaPlugin {
         //region Commands
 
         Objects.requireNonNull(this.getCommand("test")).setExecutor(new TestCommand(this));
+        Objects.requireNonNull(this.getCommand("vote")).setExecutor(new VoteCommand(this));
 
         //endregion
 
@@ -117,6 +119,15 @@ public class Werewolf extends JavaPlugin {
 
     public ArrayList<WerewolfPlayer> getPlayers() {
         return players;
+    }
+
+    public WerewolfPlayer getPlayer(String name) {
+        for (WerewolfPlayer player : players) {
+            if (player.getPlayer().getName().equals(name)) {
+                return player;
+            }
+        }
+        return null;
     }
 
     public void addPlayer(WerewolfPlayer player) {

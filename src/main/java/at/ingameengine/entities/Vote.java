@@ -2,11 +2,11 @@ package at.ingameengine.entities;
 
 import java.util.HashSet;
 
-public class Votes {
+public class Vote {
     private final WerewolfPlayer target;
     private final HashSet<WerewolfPlayer> votes;
 
-    public Votes(WerewolfPlayer target) {
+    public Vote(WerewolfPlayer target) {
         this.target = target;
         this.votes = new HashSet<>();
     }
@@ -24,7 +24,7 @@ public class Votes {
     }
 
     public void addVote(WerewolfPlayer player) {
-        if (!votes.contains(player)) return;
+        if (votes.contains(player)) return;
         votes.add(player);
     }
 

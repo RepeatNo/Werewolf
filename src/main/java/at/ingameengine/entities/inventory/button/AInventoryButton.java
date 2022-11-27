@@ -1,6 +1,7 @@
 package at.ingameengine.entities.inventory.button;
 
 import at.ingameengine.entities.inventory.InventoryNode;
+import at.ingameengine.werewolf.Werewolf;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.javatuples.Pair;
@@ -30,5 +31,5 @@ public abstract class AInventoryButton {
         return itemStack;
     }
 
-    public abstract void Execute(InventoryClickEvent event);
+    public abstract void Execute(Werewolf plugin, InventoryClickEvent event);
 }

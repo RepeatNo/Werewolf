@@ -1,6 +1,6 @@
 package at.ingameengine.utils;
 
-import at.ingameengine.entities.WerewolfPlayer;
+import at.ingameengine.entities.Vote;
 import at.ingameengine.entities.inventory.InventoryNode;
 import at.ingameengine.entities.inventory.button.*;
 import at.ingameengine.werewolf.Werewolf;
@@ -22,7 +22,7 @@ public class InventoryFactory {
     //region Inventories
 
     public InventoryNode setupInventoryNode() {
-        Pair<Integer, Integer> size = new Pair<>(6, 9);
+        Pair<Integer, Integer> size = new Pair<>(5, 9);
         ArrayList<AInventoryButton> invButtons = new ArrayList<AInventoryButton>() {
             {
                 add(new PlaceholderInvButton(new Pair<>(1, 1), "§eProfile §6» §c" + plugin.getGameProfile().getName(),
@@ -83,18 +83,24 @@ public class InventoryFactory {
     }
 
     public InventoryNode votingInventoryNode() {
-        Pair<Integer, Integer> size = new Pair<>(5, 9);
+        Pair<Integer, Integer> size = new Pair<>(6, 9);
 
         ArrayList<AInventoryButton> invButtons = new ArrayList<AInventoryButton>() {
             {
-                Integer row = 1;
-                for (int i = 0; i < plugin.getPlayers().size(); i++) {
-                    WerewolfPlayer player = plugin.getPlayers().get(i);
-                    add(new VotePlayerInvButton(new Pair<>(row, i + 1 - ((row - 1) * 7)),
-                            "§eVote for " + player.getPlayer().getName(),
-                            new ItemManager().getHead(player.getPlayer(), "§eVote for " + player.getPlayer().getName())));
-                    if (i % 7 == 0) {
-                        row++;
+                int row = 1;
+                int column = 1;
+                for (Vote vote : plugin.getVotingManager().getVotes()) {
+                    String playerName = vote.getTarget().getPlayer().getName();
+                    add(new VotePlayerInvButton(new Pair<>(row, column), playerName,
+                            new ItemManager().getHead(vote.getTarget().getPlayer(), vote.getTarget().getPlayer().getName())));
+                    add(new PlaceholderInvButton(new Pair<>(row, column + 1), "§eVotes: §6" + vote.getVotesCount(),
+                            new ItemManager().getHead("§e" + playerName + " - Votes: §6" + vote.getVotesCount(),
+                                    plugin.getSkullManager().readString("vote." + vote.getVotesCount()), null)));
+                    row++;
+
+                    if (row > size.getValue0()) {
+                        row = 1;
+                        column += 3;
                     }
                 }
             }

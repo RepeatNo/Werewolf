@@ -1,5 +1,6 @@
 package at.ingameengine.entities.inventory.button;
 
+import at.ingameengine.werewolf.Werewolf;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.javatuples.Pair;
@@ -11,6 +12,6 @@ public class PlaceholderInvButton extends AInventoryButton {
     }
 
     @Override
-    public void Execute(InventoryClickEvent event) {
+    public void Execute(Werewolf plugin, InventoryClickEvent event) {
     }
 }

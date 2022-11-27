@@ -8,3 +8,7 @@ commands:
     description: Test command
     usage: /test
     aliases: [ t ]
+  vote:
+    description: Vote for a player
+    usage: /vote
+    aliases: [ v ]

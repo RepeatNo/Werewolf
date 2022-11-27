@@ -1,21 +1,12 @@
 package at.ingameengine.gamestates.states;
 
-import at.ingameengine.entities.roles.ARole;
-import at.ingameengine.entities.roles.Villager;
-import at.ingameengine.entities.roles.WerewolfEntity;
 import at.ingameengine.gamestates.AGameState;
 import at.ingameengine.gamestates.IGameStateVisitor;
-import at.ingameengine.utils.VotingManager;
 import at.ingameengine.werewolf.Werewolf;
 
-import java.util.HashMap;
-
 public class LobbyState extends AGameState {
-    VotingManager votingManager;
-
     public LobbyState(Werewolf plugin) {
         super(plugin);
-        votingManager = new VotingManager(plugin);
     }
 
     @Override
@@ -25,11 +16,9 @@ public class LobbyState extends AGameState {
 
     @Override
     public void stop() {
+        plugin.getVotingManager().initVotes();
 
-        HashMap<ARole, Integer> roleAmount = new HashMap<>();
-        roleAmount.put(new WerewolfEntity(), 1);
-        roleAmount.put(new Villager(), 1);
-        super.plugin.getRoleManager().allocateRoles(roleAmount);
+        //TODO super.plugin.getRoleManager().allocateRoles(roleAmount);
     }
 
     @Override
