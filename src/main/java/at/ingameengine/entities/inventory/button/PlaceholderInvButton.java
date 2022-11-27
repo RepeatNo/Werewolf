@@ -8,7 +8,7 @@ import org.javatuples.Pair;
 public class PlaceholderInvButton extends AInventoryButton {
 
     public PlaceholderInvButton(Pair<Integer, Integer> position, String itemName, ItemStack itemStack) {
-        super(position, itemName, itemStack);
+        super(position,itemStack);
     }
 
     @Override

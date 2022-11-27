@@ -29,7 +29,7 @@ public class JoinListener extends AListener {
     @Override
     public void visit(SetupState state) {
         Player player = event.getPlayer();
-        ItemStack item = new ItemManager().getItem(
+        ItemStack item = new ItemManager().getInstance().getItem(
                 plugin.getConfigManager().readMaterial("items.setup.material"),
                 1,
                 plugin.getConfigManager().readString("items.setup.name"));

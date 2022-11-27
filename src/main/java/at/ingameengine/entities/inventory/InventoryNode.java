@@ -1,6 +1,7 @@
 package at.ingameengine.entities.inventory;
 
 import at.ingameengine.entities.inventory.button.AInventoryButton;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.javatuples.Pair;
@@ -128,8 +129,8 @@ public class InventoryNode {
     }
 
     private Boolean ItemNameIsNotEqual(Pair<ItemStack, ItemStack> itemStackPair) {
-        if (itemStackPair.getValue0().getItemMeta() != null) return false;
-        if (itemStackPair.getValue1().getItemMeta() != null) return false;
+        if (itemStackPair.getValue0().getItemMeta() == null) return true;
+        if (itemStackPair.getValue1().getItemMeta() == null) return true;
         return !itemStackPair.getValue0().getItemMeta().getDisplayName()
                 .equalsIgnoreCase(itemStackPair.getValue1().getItemMeta().getDisplayName());
     }

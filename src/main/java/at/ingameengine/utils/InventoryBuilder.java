@@ -25,7 +25,7 @@ public class InventoryBuilder {
         Inventory inventory = plugin.getServer().createInventory(null, size, title);
 
         for (int i = 0; i < inventory.getSize(); i++) {
-            inventory.setItem(i, new ItemManager().getItem(Material.GRAY_STAINED_GLASS_PANE, 1, "§a"));
+            inventory.setItem(i, new ItemManager().getInstance().getItem(Material.GRAY_STAINED_GLASS_PANE, 1, "§a"));
         }
 
         for (AInventoryButton invButton : invButtons) {

@@ -8,11 +8,9 @@ import at.ingameengine.gamestates.AGameState;
 import at.ingameengine.gamestates.GameStateManager;
 import at.ingameengine.listeners.*;
 import at.ingameengine.role.RoleManager;
-import at.ingameengine.utils.FileManager;
-import at.ingameengine.utils.InventoryBuilder;
-import at.ingameengine.utils.InventoryFactory;
-import at.ingameengine.utils.VotingManager;
+import at.ingameengine.utils.*;
 import org.bukkit.GameRule;
+import org.bukkit.entity.Item;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -85,6 +83,11 @@ public class Werewolf extends JavaPlugin {
 
         getServer().getWorlds().get(0).setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
 
+        //endregion
+
+        //region ItemManager
+        ItemManager itemManager = new ItemManager().getInstance();
+        itemManager.setPlugin(this);
         //endregion
     }
 

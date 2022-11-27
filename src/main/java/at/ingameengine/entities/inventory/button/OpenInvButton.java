@@ -8,8 +8,9 @@ import org.bukkit.inventory.ItemStack;
 import org.javatuples.Pair;
 
 public class OpenInvButton extends AInventoryButton {
-    public OpenInvButton(Pair<Integer, Integer> position, String itemName, ItemStack itemStack) {
-        super(position, itemName, itemStack);
+    public OpenInvButton(Pair<Integer, Integer> position, ItemStack itemStack) {
+
+        super(position, itemStack);
     }
 
     @Override

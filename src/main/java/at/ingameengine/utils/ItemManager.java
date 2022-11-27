@@ -1,5 +1,6 @@
 package at.ingameengine.utils;
 
+import at.ingameengine.werewolf.Werewolf;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Material;
@@ -15,6 +16,20 @@ import java.util.UUID;
 
 public class ItemManager {
 
+
+    public static ItemManager itemManager;
+
+    Werewolf plugin;
+    public ItemManager getInstance(){
+        if(itemManager == null)
+            itemManager = new ItemManager();
+
+        return itemManager;
+    }
+
+    public void setPlugin(Werewolf plugin) {
+        this.plugin = plugin;
+    }
     public ItemStack getItem(Material material, int amount, String displayName)
     {
         ItemStack i = new ItemStack(material, amount);
@@ -59,5 +74,9 @@ public class ItemManager {
         headMeta.setLore(lore);
         playerHead.setItemMeta(headMeta);
         return playerHead;
+    }
+
+    public ItemStack getSkullConfigHead(String displayName, String configRoute, ArrayList<String> lore) {
+        return getHead(displayName, plugin.getSkullManager().readString(configRoute), lore);
     }
 }

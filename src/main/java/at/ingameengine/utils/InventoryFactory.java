@@ -3,6 +3,9 @@ package at.ingameengine.utils;
 import at.ingameengine.entities.Vote;
 import at.ingameengine.entities.inventory.InventoryNode;
 import at.ingameengine.entities.inventory.button.*;
+import at.ingameengine.entities.inventory.button.spawns.SetDaySpawnInvButton;
+import at.ingameengine.entities.inventory.button.spawns.SetLobbySpawnInvButton;
+import at.ingameengine.entities.inventory.button.spawns.SetNightSpawnInvButton;
 import at.ingameengine.werewolf.Werewolf;
 import org.bukkit.Material;
 import org.javatuples.Pair;
@@ -26,14 +29,14 @@ public class InventoryFactory {
         ArrayList<AInventoryButton> invButtons = new ArrayList<AInventoryButton>() {
             {
                 add(new PlaceholderInvButton(new Pair<>(1, 1), "§eProfile §6» §c" + plugin.getGameProfile().getName(),
-                        new ItemManager().getHead("§eProfile §6» §c" + plugin.getGameProfile().getName(),
+                        new ItemManager().getInstance().getHead("§eProfile §6» §c" + plugin.getGameProfile().getName(),
                                 plugin.getSkullManager().readString("setup.profile"), null)));
-                add(new OpenInvButton(new Pair<>(3, 3), "§eBasics",
-                        new ItemManager().getItem(Material.COMPASS, 1, "§eBasics")));
-                add(new OpenInvButton(new Pair<>(3, 5), "§eSpawns",
-                        new ItemManager().getItem(Material.MAGMA_CREAM, 1, "§eSpawns")));
-                add(new OpenInvButton(new Pair<>(3, 7), "§eSetup",
-                        new ItemManager().getItem(Material.BOOK, 1, "§eGame Profiles")));
+                add(new OpenInvButton(new Pair<>(3, 3),
+                        new ItemManager().getInstance().getItem(Material.COMPASS, 1, "§eBasics")));
+                add(new OpenInvButton(new Pair<>(3, 5),
+                        new ItemManager().getInstance().getItem(Material.MAGMA_CREAM, 1, "§eSpawns")));
+                add(new OpenInvButton(new Pair<>(3, 7),
+                        new ItemManager().getInstance().getItem(Material.BOOK, 1, "§eGame Profiles")));
             }
         };
 
@@ -46,18 +49,18 @@ public class InventoryFactory {
         ArrayList<AInventoryButton> invButtons = new ArrayList<AInventoryButton>() {
             {
                 add(new OpenParentInvButton(size));
-                add(new OpenInvButton(new Pair<>(1, 1), "§eProfile §6» §c" + plugin.getGameProfile().getName(),
-                        new ItemManager().getHead("§eProfile §6» §c" + plugin.getGameProfile().getName(),
+                add(new OpenInvButton(new Pair<>(1, 1),
+                        new ItemManager().getInstance().getHead("§eProfile §6» §c" + plugin.getGameProfile().getName(),
                                 plugin.getSkullManager().readString("setup.profile"),
                                 null)));
-                add(new OpenInvButton(new Pair<>(3, 3), "§eBasics",
-                        new ItemManager().getItem(Material.COMPASS, 1, "§eBasics")));
+                add(new OpenInvButton(new Pair<>(3, 3),
+                        new ItemManager().getInstance().getItem(Material.COMPASS, 1, "§eBasics")));
 
                 int number = 5;
                 for (int row = 2; row < 4; row++) {
                     for (int column = 2; column < 9; column++) {
-                        add(new OpenInvButton(new Pair<>(row, column), "§6#" + number,
-                                new ItemManager().getItem(Material.BOOK, number, "§6#" + number)));
+                        add(new OpenInvButton(new Pair<>(row, column),
+                                new ItemManager().getInstance().getItem(Material.BOOK, number, "§6#" + number)));
                         number++;
                     }
                 }
@@ -67,15 +70,16 @@ public class InventoryFactory {
         return inventoryBuilder.buildInventoryNode("§eGame Profiles", size, invButtons);
     }
 
-    public InventoryNode spawnsInventoryNode() {
+    public InventoryNode spawnInventoryNode() {
         Pair<Integer, Integer> size = new Pair<>(3, 9);
 
         ArrayList<AInventoryButton> invButtons = new ArrayList<AInventoryButton>() {
             {
-                add(new OpenInvButton(new Pair<>(2, 3), "§eSet Spawn",
-                        new ItemManager().getItem(Material.NETHER_STAR, 1, "§eSet Spawn")));
-                add(new OpenInvButton(new Pair<>(2, 5), "§eSet Deine Mum",
-                        new ItemManager().getItem(Material.SPAWNER, 1, "§eSet Deine Mum")));
+                add(new OpenInvButton(new Pair<>(2, 3),
+                        new ItemManager().getInstance().getItem(Material.COMPASS, 1, "§eGeneral Spawns")));
+                add(new OpenInvButton(new Pair<>(2, 7),
+                        new ItemManager().getInstance().getSkullConfigHead("§ePlayer Spawns", "setup.wolf", null)));
+                add(new OpenParentInvButton(size));
             }
         };
 
@@ -92,9 +96,9 @@ public class InventoryFactory {
                 for (Vote vote : plugin.getVotingManager().getVotes()) {
                     String playerName = vote.getTarget().getPlayer().getName();
                     add(new VotePlayerInvButton(new Pair<>(row, column), playerName,
-                            new ItemManager().getHead(vote.getTarget().getPlayer(), vote.getTarget().getPlayer().getName())));
+                            new ItemManager().getInstance().getHead(vote.getTarget().getPlayer(), vote.getTarget().getPlayer().getName())));
                     add(new PlaceholderInvButton(new Pair<>(row, column + 1), "§eVotes: §6" + vote.getVotesCount(),
-                            new ItemManager().getHead("§e" + playerName + " - Votes: §6" + vote.getVotesCount(),
+                            new ItemManager().getInstance().getHead("§e" + playerName + " - Votes: §6" + vote.getVotesCount(),
                                     plugin.getSkullManager().readString("vote." + vote.getVotesCount()), null)));
                     row++;
 
@@ -109,19 +113,38 @@ public class InventoryFactory {
         return inventoryBuilder.buildInventoryNode("§eVoting Menu", size, invButtons);
     }
 
-    //endregion
+    public InventoryNode generalSpawnInventoryNode() {
+        Pair<Integer, Integer> size = new Pair<>(3, 9);
 
-    //region Inventory Nodes
+        ArrayList<AInventoryButton> invButtons = new ArrayList<AInventoryButton>() {
+            {
+                add(new SetLobbySpawnInvButton(new Pair<>(2, 3),
+                        new ItemManager().getInstance().getItem(Material.NETHER_STAR, 1, "§cLobby Spawn")));
+                add(new SetDaySpawnInvButton(new Pair<>(2, 5),
+                        new ItemManager().getInstance().getSkullConfigHead("§cDay Spawn", "setup.sun", null)));
+                add(new SetNightSpawnInvButton(new Pair<>(2, 7),
+                        new ItemManager().getInstance().getSkullConfigHead("§cNight Spawn", "setup.moon", null)));
+                add(new OpenParentInvButton(size));
+            }
+        };
+
+        return inventoryBuilder.buildInventoryNode("§eGeneral Spawns", size, invButtons);
+    }
 
     public InventoryNode getSetupRootNode() {
         InventoryNode setupRoot = setupInventoryNode();
 
         InventoryNode gameProfiles = gameProfileInventoryNode();
         setupRoot.addChild(gameProfiles);
-        InventoryNode spawns = spawnsInventoryNode();
+        InventoryNode spawns = spawnInventoryNode();
         setupRoot.addChild(spawns);
         InventoryNode basics = gameProfileInventoryNode();
         setupRoot.addChild(basics);
+
+        //region spawn nodes
+        InventoryNode generalSpawns = generalSpawnInventoryNode();
+        spawns.addChild(generalSpawns);
+        //endregion
 
         return setupRoot;
     }

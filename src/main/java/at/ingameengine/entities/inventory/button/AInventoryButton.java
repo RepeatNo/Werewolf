@@ -13,8 +13,8 @@ public abstract class AInventoryButton {
 
     protected InventoryNode node;
 
-    public AInventoryButton(Pair<Integer, Integer> position, String itemName, ItemStack itemStack) {
-        this.itemName = itemName;
+    public AInventoryButton(Pair<Integer, Integer> position, ItemStack itemStack) {
+        this.itemName = itemStack.getItemMeta().getDisplayName();
         this.itemStack = itemStack;
         this.position = position;
     }
