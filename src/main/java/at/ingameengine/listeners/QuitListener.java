@@ -48,4 +48,14 @@ public class QuitListener extends AListener {
     public void visit(DiscussionState state) {
 
     }
+
+    @Override
+    public void visit(FirstDayState firstDayState) {
+
+    }
+
+    @Override
+    public void visit(FirstNightState firstNightState) {
+
+    }
 }

@@ -38,15 +38,7 @@ public class InventoryClickListener extends AListener {
 
     @Override
     public void visit(SetupState state) {
-        InventoryNode setup = inventoryFactory.getSetupRootNode();
-
-        InventoryNode clickedInventory = setup
-                .getNode(event.getInventory());
-        if (clickedInventory == null) return;
-
-        AInventoryButton invButton = clickedInventory.getInventoryButton(event.getCurrentItem());
-        if (invButton == null) return;
-        invButton.Execute(plugin, event);
+        executeButton(inventoryFactory.getSetupRootNode());
     }
 
     @Override
@@ -56,14 +48,7 @@ public class InventoryClickListener extends AListener {
 
     @Override
     public void visit(DayState state) {
-        InventoryNode voting = inventoryFactory.votingInventoryNode();
-        InventoryNode clickedInventory = voting
-                .getNode(event.getInventory());
-        if (clickedInventory == null) return;
-
-        AInventoryButton invButton = clickedInventory.getInventoryButton(event.getCurrentItem());
-        if (invButton == null) return;
-        invButton.Execute(plugin, event);
+        executeButton(inventoryFactory.votingInventoryNode());
     }
 
     @Override
@@ -79,6 +64,26 @@ public class InventoryClickListener extends AListener {
     @Override
     public void visit(DiscussionState state) {
 
+    }
+
+    @Override
+    public void visit(FirstDayState firstDayState) {
+
+    }
+
+    @Override
+    public void visit(FirstNightState firstNightState) {
+
+    }
+
+    private void executeButton(InventoryNode node) {
+        InventoryNode clickedInventory = node
+                .getNode(event.getInventory());
+        if (clickedInventory == null) return;
+
+        AInventoryButton invButton = clickedInventory.getInventoryButton(event.getCurrentItem());
+        if (invButton == null) return;
+        invButton.Execute(plugin, event);
     }
 }
 

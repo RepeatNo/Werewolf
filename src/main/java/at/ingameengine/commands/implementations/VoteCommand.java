@@ -42,4 +42,14 @@ public class VoteCommand extends ACommand {
     public void visit(DiscussionState state) {
 
     }
+
+    @Override
+    public void visit(FirstDayState firstDayState) {
+
+    }
+
+    @Override
+    public void visit(FirstNightState firstNightState) {
+
+    }
 }

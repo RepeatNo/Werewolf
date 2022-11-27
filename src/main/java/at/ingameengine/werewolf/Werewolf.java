@@ -42,7 +42,6 @@ public class Werewolf extends JavaPlugin {
         gameStateManager = new GameStateManager(this);
         gameStateManager.setGameState(AGameState.SETUP_STATE);
         roleManager = new RoleManager(this);
-        votingManager = new VotingManager(this);
 
         //region Configs
         configManager = new FileManager(this, "config.yml");

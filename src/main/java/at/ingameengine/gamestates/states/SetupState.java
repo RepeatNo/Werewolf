@@ -4,7 +4,6 @@ import at.ingameengine.gamestates.AGameState;
 import at.ingameengine.gamestates.IGameStateVisitor;
 import at.ingameengine.utils.ActionbarManager;
 import at.ingameengine.werewolf.Werewolf;
-import org.bukkit.Bukkit;
 
 public class SetupState extends AGameState {
 
@@ -30,12 +29,12 @@ public class SetupState extends AGameState {
     }
 
     private void runnable(){
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             @Override
             public void run() {
                 actionbarManager.sendActionbar(Werewolf.prefix + "§7Setup required!", plugin.getConfigManager().readString("permissions.admin"));
             }
-        }, 1, 20L*1);
+        }, 1, 20L);
 
     }
 }

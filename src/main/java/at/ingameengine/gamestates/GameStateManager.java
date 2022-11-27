@@ -1,5 +1,6 @@
 package at.ingameengine.gamestates;
 
+import at.ingameengine.entities.WerewolfPlayer;
 import at.ingameengine.gamestates.states.*;
 import at.ingameengine.werewolf.Werewolf;
 
@@ -11,10 +12,12 @@ public class GameStateManager {
 
     public GameStateManager(Werewolf plugin) {
         this.plugin = plugin;
-        gameStates = new AGameState[6];
+        gameStates = new AGameState[8];
 
         gameStates[AGameState.SETUP_STATE] = new SetupState(plugin);
         gameStates[AGameState.LOBBY_STATE] = new LobbyState(plugin);
+        gameStates[AGameState.FIRST_NIGHT_STATE] = new FirstNightState(plugin);
+        gameStates[AGameState.FIRST_DAY_STATE] = new FirstDayState(plugin);
         gameStates[AGameState.DISCUSSION_STATE] = new DiscussionState(plugin);
         gameStates[AGameState.DAY_STATE] = new DayState(plugin);
         gameStates[AGameState.NIGHT_STATE] = new NightState(plugin);
@@ -37,5 +40,9 @@ public class GameStateManager {
             currentGameState.stop();
             currentGameState = null;
         }
+    }
+
+    public void addVote(WerewolfPlayer player, WerewolfPlayer target) {
+        currentGameState.addVote(player, target);
     }
 }

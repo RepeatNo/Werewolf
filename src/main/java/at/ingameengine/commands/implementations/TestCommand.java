@@ -35,6 +35,16 @@ public class TestCommand extends ACommand {
     }
 
     @Override
+    public void visit(FirstDayState firstDayState) {
+
+    }
+
+    @Override
+    public void visit(FirstNightState firstNightState) {
+
+    }
+
+    @Override
     public void visit(EndingState state) {
     }
 }

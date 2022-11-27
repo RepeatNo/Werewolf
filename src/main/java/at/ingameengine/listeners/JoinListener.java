@@ -66,6 +66,16 @@ public class JoinListener extends AListener {
 
     }
 
+    @Override
+    public void visit(FirstDayState firstDayState) {
+
+    }
+
+    @Override
+    public void visit(FirstNightState firstNightState) {
+
+    }
+
     private void resetPlayer(PlayerEvent event) {
         event.getPlayer().getInventory().clear();
         event.getPlayer().setHealth(20);

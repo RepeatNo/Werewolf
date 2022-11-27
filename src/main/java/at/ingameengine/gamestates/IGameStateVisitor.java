@@ -14,4 +14,8 @@ public interface IGameStateVisitor {
     void visit(EndingState state);
 
     void visit(DiscussionState state);
+
+    void visit(FirstDayState firstDayState);
+
+    void visit(FirstNightState firstNightState);
 }
