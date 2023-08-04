@@ -22,17 +22,17 @@ public class InventoryFactory {
     //region Inventories
 
     public InventoryNode setupInventoryNode() {
-        Pair<Integer, Integer> size = new Pair<>(6, 9);
+        Pair<Integer, Integer> size = new Pair<>(3, 9);
         ArrayList<AInventoryButton> invButtons = new ArrayList<AInventoryButton>() {
             {
                 add(new PlaceholderInvButton(new Pair<>(1, 1), "§eProfile §6» §c" + plugin.getGameProfile().getName(),
                         new ItemManager().getHead("§eProfile §6» §c" + plugin.getGameProfile().getName(),
                                 plugin.getSkullManager().readString("setup.profile"), null)));
-                add(new OpenInvButton(new Pair<>(3, 3), "§eBasics",
+                add(new OpenInvButton(new Pair<>(2, 3), "§eBasics",
                         new ItemManager().getItem(Material.COMPASS, 1, "§eBasics")));
-                add(new OpenInvButton(new Pair<>(3, 5), "§eSpawns",
-                        new ItemManager().getItem(Material.MAGMA_CREAM, 1, "§eSpawns")));
-                add(new OpenInvButton(new Pair<>(3, 7), "§eSetup",
+                add(new OpenInvButton(new Pair<>(2, 5), "§eLocations",
+                        new ItemManager().getItem(Material.MAGMA_CREAM, 1, "§eLocations")));
+                add(new OpenInvButton(new Pair<>(2, 7), "§eSetup",
                         new ItemManager().getItem(Material.BOOK, 1, "§eGame Profiles")));
             }
         };
@@ -72,14 +72,15 @@ public class InventoryFactory {
 
         ArrayList<AInventoryButton> invButtons = new ArrayList<AInventoryButton>() {
             {
-                add(new OpenInvButton(new Pair<>(2, 3), "§eSet Spawn",
-                        new ItemManager().getItem(Material.NETHER_STAR, 1, "§eSet Spawn")));
-                add(new OpenInvButton(new Pair<>(2, 5), "§eSet Deine Mum",
-                        new ItemManager().getItem(Material.SPAWNER, 1, "§eSet Deine Mum")));
+                add(new OpenParentInvButton(size));
+                add(new SetLocationButton(new Pair<>(2, 3), "§eSet Spawn", "lobby-spawn",
+                        new ItemManager().getItem(Material.NETHER_STAR, 1, "§eSet Spawn"), plugin));
+                add(new SetLocationButton(new Pair<>(2, 5), "§eSet Game Spawn", "game-spawn",
+                        new ItemManager().getItem(Material.SPAWNER, 1, "§eSet Game Spawn"), plugin));
             }
         };
 
-        return inventoryBuilder.buildInventoryNode("§eSpawns", size, invButtons);
+        return inventoryBuilder.buildInventoryNode("§eLocations", size, invButtons);
     }
 
     public InventoryNode votingInventoryNode() {

@@ -5,22 +5,23 @@ import at.ingameengine.entities.roles.Villager;
 import at.ingameengine.entities.roles.WerewolfEntity;
 import at.ingameengine.gamestates.AGameState;
 import at.ingameengine.gamestates.IGameStateVisitor;
+import at.ingameengine.utils.ActionbarManager;
 import at.ingameengine.utils.VotingManager;
 import at.ingameengine.werewolf.Werewolf;
 
 import java.util.HashMap;
 
 public class LobbyState extends AGameState {
-    VotingManager votingManager;
 
     public LobbyState(Werewolf plugin) {
         super(plugin);
-        votingManager = new VotingManager(plugin);
     }
 
     @Override
     public void start() {
-
+        plugin.getServer().getWorlds().get(0).setTime(6000);
+        plugin.getExpBarManager().startLoadingExpBar();
+        plugin.getActionbarManager().startActionBar("§eWaiting for players...");
     }
 
     @Override

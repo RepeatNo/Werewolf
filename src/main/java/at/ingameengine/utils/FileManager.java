@@ -1,6 +1,7 @@
 package at.ingameengine.utils;
 
 import at.ingameengine.werewolf.Werewolf;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -70,7 +71,6 @@ public class FileManager {
 
         if(!file.exists())
             this.plugin.saveResource(fileName, false);
-
     }
 
     public void setValue(String name, String value) {
@@ -98,5 +98,41 @@ public class FileManager {
             input = input.replaceAll(key, replacements.get(key));
         }
         return input;
+    }
+
+    public void setLocation(String path, Location location) {
+        FileConfiguration config = getFileConfiguration();
+
+        // Round the location to the block the player is standing on
+        Location roundedLocation = new Location(location.getWorld(),
+                Math.floor(location.getX()) + 0.5, Math.floor(location.getY()), Math.floor(location.getZ()) + 0.5);
+
+        config.set(path + ".world", roundedLocation.getWorld().getName());
+        config.set(path + ".x", roundedLocation.getX());
+        config.set(path + ".y", roundedLocation.getY());
+        config.set(path + ".z", roundedLocation.getZ());
+
+        // Set pitch to 0
+        config.set(path + ".pitch", 0);
+
+        // Round the yaw
+        float roundedYaw = Math.round(location.getYaw() / 90) * 90;
+        config.set(path + ".yaw", roundedYaw);
+        saveConfig();
+    }
+
+    public Location getLocation(String path) {
+        FileConfiguration config = getFileConfiguration();
+        if (config.contains(path + ".world")) {
+            String worldName = config.getString(path + ".world");
+            double x = config.getDouble(path + ".x");
+            double y = config.getDouble(path + ".y");
+            double z = config.getDouble(path + ".z");
+            float yaw = (float) config.getDouble(path + ".yaw");
+            float pitch = (float) config.getDouble(path + ".pitch");
+
+            return new Location(plugin.getServer().getWorld(worldName), x, y, z, yaw, pitch);
+        }
+        return null;
     }
 }

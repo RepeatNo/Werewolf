@@ -7,12 +7,15 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.management.relation.Role;
 
 public class ActionbarManager {
 
     Werewolf plugin;
+
+    int runnableTaskId;
 
     public ActionbarManager(Werewolf plugin) {
         this.plugin = plugin;
@@ -41,6 +44,22 @@ public class ActionbarManager {
             if(player.getRole() == role) {
                 sendActionbar(message, player.getPlayer());
             }
+        }
+    }
+
+    public void startActionBar(String message) {
+        runnableTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+
+            @Override
+            public void run() {
+                sendActionbar(message);
+            }
+        }, 1, 20L);
+    }
+
+    public void stopActionBar() {
+        if (runnableTaskId != -1) {
+            Bukkit.getScheduler().cancelTask(runnableTaskId); // Cancel the runnable task
         }
     }
 }

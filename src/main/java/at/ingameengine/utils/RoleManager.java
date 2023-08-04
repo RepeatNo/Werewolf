@@ -1,4 +1,4 @@
-package at.ingameengine.role;
+package at.ingameengine.utils;
 
 import at.ingameengine.entities.WerewolfPlayer;
 import at.ingameengine.entities.roles.ARole;

@@ -9,6 +9,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.event.world.TimeSkipEvent;
 
 public class CancelledListeners implements Listener {
     Werewolf plugin;

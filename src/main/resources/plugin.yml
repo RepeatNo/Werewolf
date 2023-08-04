@@ -2,9 +2,13 @@ name: Werewolf
 version: '${project.version}'
 main: at.ingameengine.werewolf.Werewolf
 api-version: 1.19
-authors: [ Minegt, NoRepeat ]
+authors: [ NoRepeat, Minegt ]
 commands:
   test:
     description: Test command
     usage: /test
     aliases: [ t ]
+  config:
+    description: Config command
+    usage: /config
+    aliases: [ c ]

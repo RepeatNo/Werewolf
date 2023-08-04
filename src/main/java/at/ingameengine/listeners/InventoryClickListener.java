@@ -32,6 +32,35 @@ public class InventoryClickListener extends AListener {
 
     @Override
     public void visit(SetupState state) {
+        handleInventoryClickEvent(event);
+    }
+
+    @Override
+    public void visit(LobbyState state) {
+        handleInventoryClickEvent(event);
+    }
+
+    @Override
+    public void visit(DayState state) {
+
+    }
+
+    @Override
+    public void visit(NightState state) {
+
+    }
+
+    @Override
+    public void visit(EndingState state) {
+
+    }
+
+    @Override
+    public void visit(DiscussionState state) {
+
+    }
+
+    public void handleInventoryClickEvent(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
         if (!(player.getGameMode() == GameMode.CREATIVE)) event.setCancelled(true);
@@ -55,31 +84,6 @@ public class InventoryClickListener extends AListener {
             player.openInventory(parent.getInventory());
             return;
         }*/
-    }
-
-    @Override
-    public void visit(LobbyState state) {
-
-    }
-
-    @Override
-    public void visit(DayState state) {
-
-    }
-
-    @Override
-    public void visit(NightState state) {
-
-    }
-
-    @Override
-    public void visit(EndingState state) {
-
-    }
-
-    @Override
-    public void visit(DiscussionState state) {
-
     }
 }
 

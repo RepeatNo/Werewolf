@@ -2,6 +2,7 @@ package at.ingameengine.gamestates;
 
 import at.ingameengine.gamestates.states.*;
 import at.ingameengine.werewolf.Werewolf;
+import org.bukkit.Bukkit;
 
 public class GameStateManager {
 
@@ -26,6 +27,7 @@ public class GameStateManager {
 
         currentGameState = gameStates[gameStateId];
         currentGameState.start();
+        Bukkit.broadcastMessage("" + currentGameState);
     }
 
     public AGameState getGameState() {
