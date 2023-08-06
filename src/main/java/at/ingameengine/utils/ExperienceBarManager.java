@@ -15,7 +15,7 @@ public class ExperienceBarManager {
     }
 
     public void setExpBar(float exp) {
-        plugin.getPlayers().forEach(player -> setExpBar(player.getPlayer(), exp));
+        plugin.getWerewolfPlayers().forEach(player -> setExpBar(player.getPlayer(), exp));
     }
 
     public void setExpBar(Player player, float exp) {

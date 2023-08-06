@@ -27,13 +27,13 @@ public class InventoryFactory {
             {
                 add(new PlaceholderInvButton(new Pair<>(1, 1), "§eProfile §6» §c" + plugin.getGameProfile().getName(),
                         new ItemManager().getHead("§eProfile §6» §c" + plugin.getGameProfile().getName(),
-                                plugin.getSkullManager().readString("setup.profile"), null)));
+                                plugin.getSkullManager().readString("setup.profile"), null), plugin));
                 add(new OpenInvButton(new Pair<>(2, 3), "§eBasics",
-                        new ItemManager().getItem(Material.COMPASS, 1, "§eBasics")));
+                        new ItemManager().getItem(Material.COMPASS, 1, "§eBasics"), plugin));
                 add(new OpenInvButton(new Pair<>(2, 5), "§eLocations",
-                        new ItemManager().getItem(Material.MAGMA_CREAM, 1, "§eLocations")));
+                        new ItemManager().getItem(Material.MAGMA_CREAM, 1, "§eLocations"), plugin));
                 add(new OpenInvButton(new Pair<>(2, 7), "§eSetup",
-                        new ItemManager().getItem(Material.BOOK, 1, "§eGame Profiles")));
+                        new ItemManager().getItem(Material.BOOK, 1, "§eGame Profiles"), plugin));
             }
         };
 
@@ -45,19 +45,19 @@ public class InventoryFactory {
 
         ArrayList<AInventoryButton> invButtons = new ArrayList<AInventoryButton>() {
             {
-                add(new OpenParentInvButton(size));
+                add(new OpenParentInvButton(size, plugin));
                 add(new OpenInvButton(new Pair<>(1, 1), "§eProfile §6» §c" + plugin.getGameProfile().getName(),
                         new ItemManager().getHead("§eProfile §6» §c" + plugin.getGameProfile().getName(),
                                 plugin.getSkullManager().readString("setup.profile"),
-                                null)));
+                                null), plugin));
                 add(new OpenInvButton(new Pair<>(3, 3), "§eBasics",
-                        new ItemManager().getItem(Material.COMPASS, 1, "§eBasics")));
+                        new ItemManager().getItem(Material.COMPASS, 1, "§eBasics"), plugin));
 
                 int number = 5;
                 for (int row = 2; row < 4; row++) {
                     for (int column = 2; column < 9; column++) {
                         add(new OpenInvButton(new Pair<>(row, column), "§6#" + number,
-                                new ItemManager().getItem(Material.BOOK, number, "§6#" + number)));
+                                new ItemManager().getItem(Material.BOOK, number, "§6#" + number), plugin));
                         number++;
                     }
                 }
@@ -72,9 +72,13 @@ public class InventoryFactory {
 
         ArrayList<AInventoryButton> invButtons = new ArrayList<AInventoryButton>() {
             {
-                add(new OpenParentInvButton(size));
-                add(new SetLocationButton(new Pair<>(2, 3), "§eSet Spawn", "lobby-spawn",
-                        new ItemManager().getItem(Material.NETHER_STAR, 1, "§eSet Spawn"), plugin));
+                add(new OpenParentInvButton(size, plugin));
+                add(new SetLocationButton(
+                        new Pair<>(2, 3),
+                        "§eSet Spawn",
+                        "lobby-spawn",
+                        new ItemManager().getItem(Material.NETHER_STAR, 1, "§eSet Spawn"),
+                        plugin));
                 add(new SetLocationButton(new Pair<>(2, 5), "§eSet Game Spawn", "game-spawn",
                         new ItemManager().getItem(Material.SPAWNER, 1, "§eSet Game Spawn"), plugin));
             }
@@ -89,11 +93,11 @@ public class InventoryFactory {
         ArrayList<AInventoryButton> invButtons = new ArrayList<AInventoryButton>() {
             {
                 Integer row = 1;
-                for (int i = 0; i < plugin.getPlayers().size(); i++) {
-                    WerewolfPlayer player = plugin.getPlayers().get(i);
+                for (int i = 0; i < plugin.getWerewolfPlayers().size(); i++) {
+                    WerewolfPlayer player = plugin.getWerewolfPlayers().get(i);
                     add(new VotePlayerInvButton(new Pair<>(row, i + 1 - ((row - 1) * 7)),
                             "§eVote for " + player.getPlayer().getName(),
-                            new ItemManager().getHead(player.getPlayer(), "§eVote for " + player.getPlayer().getName())));
+                            new ItemManager().getHead(player.getPlayer(), "§eVote for " + player.getPlayer().getName()), plugin));
                     if (i % 7 == 0) {
                         row++;
                     }

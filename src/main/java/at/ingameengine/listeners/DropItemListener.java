@@ -30,7 +30,17 @@ public class DropItemListener extends AListener {
     }
 
     @Override
-    public void visit(LobbyState state) {
+    public void visit(LobbyWaitingState state) {
+
+    }
+
+    @Override
+    public void visit(LobbyReadyState state) {
+
+    }
+
+    @Override
+    public void visit(RoleDistributionState state) {
 
     }
 

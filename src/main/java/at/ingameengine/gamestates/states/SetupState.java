@@ -9,12 +9,10 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class SetupState extends AGameState {
 
-    ActionbarManager actionbarManager;
     int runnableTaskId; // Store the BukkitTask reference
 
     public SetupState(Werewolf plugin) {
         super(plugin);
-        actionbarManager = new ActionbarManager(plugin);
     }
 
     @Override
@@ -22,6 +20,7 @@ public class SetupState extends AGameState {
         startRunnable();
         plugin.getServer().getWorlds().get(0).setTime(6000);
 
+        plugin.getActionbarManager().startActionBar(Werewolf.prefix + "§7Setup required!", plugin.getConfigManager().readString("permissions.admin"));
     }
 
     @Override
@@ -30,7 +29,8 @@ public class SetupState extends AGameState {
             Bukkit.getScheduler().cancelTask(runnableTaskId); // Cancel the runnable task
         }
 
-        actionbarManager.sendActionbar("");
+        plugin.getActionbarManager().stopActionBar();
+        plugin.getPlayerHandler().resetPlayer();
     }
 
     @Override
@@ -42,18 +42,16 @@ public class SetupState extends AGameState {
         runnableTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             @Override
             public void run() {
-                actionbarManager.sendActionbar(Werewolf.prefix + "§7Setup required!", plugin.getConfigManager().readString("permissions.admin"));
-
                 if (checkSetupCompletion()) {
-                    plugin.getGameStateManager().setGameState(LOBBY_STATE);
+                    plugin.getGameStateManager().setGameState(LOBBY_WAITING_STATE);
                 }
             }
-        }, 1, 20L * 1);
+        }, 1, 20L);
     }
 
-    private boolean checkSetupCompletion(){
-        if(plugin.getLocationsManager().getLocation("lobby-spawn") == null) return false;
-        if(plugin.getLocationsManager().getLocation("game-spawn") == null) return false;
+    private boolean checkSetupCompletion() {
+        if (plugin.getLocationsManager().getLocation("lobby-spawn") == null) return false;
+        if (plugin.getLocationsManager().getLocation("game-spawn") == null) return false;
 
         return true;
     }

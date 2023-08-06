@@ -15,8 +15,7 @@ import java.util.UUID;
 
 public class ItemManager {
 
-    public ItemStack getItem(Material material, int amount, String displayName)
-    {
+    public ItemStack getItem(Material material, int amount, String displayName) {
         ItemStack i = new ItemStack(material, amount);
         ItemMeta im = i.getItemMeta();
         im.setDisplayName(displayName);
@@ -24,8 +23,7 @@ public class ItemManager {
         return i;
     }
 
-    public ItemStack getItem(Material material, int amount, String displayName, ArrayList<String> lore)
-    {
+    public ItemStack getItem(Material material, int amount, String displayName, ArrayList<String> lore) {
         ItemStack i = new ItemStack(material, amount);
         ItemMeta im = i.getItemMeta();
         im.setDisplayName(displayName);
@@ -34,7 +32,7 @@ public class ItemManager {
         return i;
     }
 
-    public ItemStack getHead(Player player,String displayName) {
+    public ItemStack getHead(Player player, String displayName) {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
         SkullMeta skull = (SkullMeta) item.getItemMeta();
         skull.setDisplayName(displayName);
@@ -45,7 +43,7 @@ public class ItemManager {
 
     public ItemStack getHead(String displayName, String texture, ArrayList<String> lore) {
         ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
-        SkullMeta headMeta = (SkullMeta)playerHead.getItemMeta();
+        SkullMeta headMeta = (SkullMeta) playerHead.getItemMeta();
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
         profile.getProperties().put("textures", new Property("textures", texture));
         try {

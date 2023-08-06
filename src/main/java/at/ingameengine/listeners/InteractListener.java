@@ -1,13 +1,20 @@
 package at.ingameengine.listeners;
 
 import at.ingameengine.entities.inventory.InventoryNode;
+import at.ingameengine.gamestates.AGameState;
 import at.ingameengine.gamestates.states.*;
 import at.ingameengine.utils.InventoryFactory;
 import at.ingameengine.werewolf.Werewolf;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class InteractListener extends AListener {
 
@@ -39,7 +46,36 @@ public class InteractListener extends AListener {
     }
 
     @Override
-    public void visit(LobbyState state) {
+    public void visit(LobbyWaitingState state) {
+
+    }
+
+    @Override
+    public void visit(LobbyReadyState state) {
+        Player player = event.getPlayer();
+        ItemStack item = player.getInventory().getItemInMainHand();
+
+        if (item.getItemMeta() == null) return;
+
+        if (!item.getItemMeta().getDisplayName().equalsIgnoreCase(plugin.getConfigManager().readString("items.ready.name")))
+            return;
+
+        plugin.getReadyManager().addReadyPlayer(player);
+        plugin.getPlayerHandler().removeItemFromInventory(player, "ready");
+
+        plugin.getActionbarManager().stopActionBar();
+        plugin.getActionbarManager().startActionBar("§a" + plugin.getReadyManager().getReadyPlayers().size() + " of " + plugin.getWerewolfPlayers().size() + " players are ready!");
+
+        List<Player> werewolfPlayerPlayers = plugin.getWerewolfPlayers().stream().map(at.ingameengine.entities.WerewolfPlayer::getPlayer).collect(Collectors.toList());
+
+        if (plugin.getReadyManager().getReadyPlayers().stream().allMatch(rp -> werewolfPlayerPlayers.contains(rp.getPlayer()))) {
+            gameStateManager.setGameState(AGameState.ROLE_DISTRIBUTION_STATE);
+        }
+
+    }
+
+    @Override
+    public void visit(RoleDistributionState state) {
 
     }
 

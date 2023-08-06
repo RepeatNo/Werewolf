@@ -5,7 +5,10 @@ import at.ingameengine.gamestates.states.*;
 public interface IGameStateVisitor {
     void visit(SetupState state);
 
-    void visit(LobbyState state);
+    void visit(LobbyWaitingState state);
+
+    void visit(LobbyReadyState state);
+    void visit(RoleDistributionState state);
 
     void visit(DayState state);
 

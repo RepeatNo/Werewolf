@@ -9,11 +9,8 @@ import org.javatuples.Pair;
 
 public class SetLocationButton extends AInventoryButton {
 
-    Werewolf plugin;
-
     public SetLocationButton(Pair<Integer, Integer> position, String locationName, String itemName, ItemStack itemStack, Werewolf plugin) {
-        super(position, itemName, itemStack);
-        this.plugin = plugin;
+        super(position, itemName, itemStack, plugin);
     }
 
     @Override

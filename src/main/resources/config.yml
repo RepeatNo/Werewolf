@@ -14,7 +14,11 @@ items:
     name: "&6Setup"
     material: "BLAZE_ROD"
     slot: 5
+  ready:
+    name: "&aReady"
+    material: "EMERALD"
+    slot: 5
 
 player:
-  min: 2
+  min: 1
   max: 10

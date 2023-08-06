@@ -2,15 +2,16 @@ package at.ingameengine.entities.inventory.button;
 
 import at.ingameengine.entities.inventory.InventoryNode;
 import at.ingameengine.utils.ItemManager;
+import at.ingameengine.werewolf.Werewolf;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.javatuples.Pair;
 
 public class OpenParentInvButton extends AInventoryButton {
-    public OpenParentInvButton(Pair<Integer, Integer> position) {
+    public OpenParentInvButton(Pair<Integer, Integer> position, Werewolf plugin) {
         super(position, "§cBack",
-                new ItemManager().getItem(Material.BARRIER, 1, "§cBack"));
+                new ItemManager().getItem(Material.BARRIER, 1, "§cBack"), plugin);
     }
 
     @Override

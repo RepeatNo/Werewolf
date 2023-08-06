@@ -25,7 +25,17 @@ public class QuitListener extends AListener {
     }
 
     @Override
-    public void visit(LobbyState state) {
+    public void visit(LobbyWaitingState state) {
+        plugin.removePlayer(event.getPlayer());
+    }
+
+    @Override
+    public void visit(LobbyReadyState state) {
+
+    }
+
+    @Override
+    public void visit(RoleDistributionState state) {
 
     }
 

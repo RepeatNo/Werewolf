@@ -2,7 +2,6 @@ package at.ingameengine.commands.implementations;
 
 import at.ingameengine.gamestates.states.*;
 import at.ingameengine.werewolf.Werewolf;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,7 +17,17 @@ public class ConfigCommand extends ACommand{
     }
 
     @Override
-    public void visit(LobbyState state) {
+    public void visit(LobbyWaitingState state) {
+
+    }
+
+    @Override
+    public void visit(LobbyReadyState state) {
+
+    }
+
+    @Override
+    public void visit(RoleDistributionState state) {
 
     }
 

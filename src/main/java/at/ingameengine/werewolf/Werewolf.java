@@ -9,6 +9,7 @@ import at.ingameengine.gamestates.GameStateManager;
 import at.ingameengine.listeners.*;
 import at.ingameengine.utils.*;
 import org.bukkit.GameRule;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class Werewolf extends JavaPlugin {
     private RoleManager roleManager;
     private ExperienceBarManager experienceBarManager;
     private ActionbarManager actionbarManager;
+    private PlayerHandler playerHandler;
+    private ReadyManager readyManager;
 
     private FileManager configManager;
     private FileManager messageManager;
@@ -39,13 +42,6 @@ public class Werewolf extends JavaPlugin {
     public void onEnable() {
         players = new ArrayList<>();
 
-        gameStateManager = new GameStateManager(this);
-        gameStateManager.setGameState(AGameState.SETUP_STATE);
-        roleManager = new RoleManager(this);
-        votingManager = new VotingManager(this);
-        experienceBarManager = new ExperienceBarManager(this);
-        actionbarManager = new ActionbarManager(this);
-
         //region Configs
         configManager = new FileManager(this, "config.yml");
         messageManager = new FileManager(this, "messages.yml");
@@ -55,15 +51,26 @@ public class Werewolf extends JavaPlugin {
 
         //endregion
 
-        inventoryBuilder = new InventoryBuilder(this);
-        inventoryFactory = new InventoryFactory(this);
-        gameProfile = new GameProfile(this, configManager.readString("game-profile"));
-
         //region ConfigElements
 
         prefix = messageManager.readString("prefix");
 
         //endregion
+
+
+        roleManager = new RoleManager(this);
+        votingManager = new VotingManager(this);
+        experienceBarManager = new ExperienceBarManager(this);
+        actionbarManager = new ActionbarManager(this);
+        playerHandler = new PlayerHandler(this);
+        readyManager = new ReadyManager(this);
+
+        inventoryBuilder = new InventoryBuilder(this);
+        inventoryFactory = new InventoryFactory(this);
+        gameProfile = new GameProfile(this, configManager.readString("game-profile"));
+
+        gameStateManager = new GameStateManager(this);
+        gameStateManager.setGameState(AGameState.SETUP_STATE);
 
         //region Commands
 
@@ -92,6 +99,8 @@ public class Werewolf extends JavaPlugin {
         getServer().getWorlds().get(0).setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
 
         //endregion
+
+
     }
 
     @Override
@@ -110,6 +119,7 @@ public class Werewolf extends JavaPlugin {
     public ExperienceBarManager getExpBarManager() {
         return experienceBarManager;
     }
+
     public ActionbarManager getActionbarManager() {
         return actionbarManager;
     }
@@ -134,7 +144,7 @@ public class Werewolf extends JavaPlugin {
         return locationsManager;
     }
 
-    public ArrayList<WerewolfPlayer> getPlayers() {
+    public ArrayList<WerewolfPlayer> getWerewolfPlayers() {
         return players;
     }
 
@@ -144,6 +154,10 @@ public class Werewolf extends JavaPlugin {
 
     public void removePlayer(WerewolfPlayer player) {
         this.players.remove(player);
+    }
+
+    public void removePlayer(Player player) {
+        players.removeIf(werewolfPlayer -> werewolfPlayer.getPlayer().equals(player));
     }
 
     public GameProfile getGameProfile() {
@@ -160,5 +174,13 @@ public class Werewolf extends JavaPlugin {
 
     public VotingManager getVotingManager() {
         return votingManager;
+    }
+
+    public PlayerHandler getPlayerHandler() {
+        return playerHandler;
+    }
+
+    public ReadyManager getReadyManager() {
+        return readyManager;
     }
 }

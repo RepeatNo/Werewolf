@@ -14,12 +14,22 @@ public class TestCommand extends ACommand {
 
     @Override
     public void visit(SetupState state) {
-        plugin.getGameStateManager().setGameState(AGameState.LOBBY_STATE);
+        plugin.getGameStateManager().setGameState(AGameState.LOBBY_WAITING_STATE);
     }
 
     @Override
-    public void visit(LobbyState state) {
+    public void visit(LobbyWaitingState state) {
         plugin.getGameStateManager().setGameState(AGameState.DAY_STATE);
+    }
+
+    @Override
+    public void visit(LobbyReadyState state) {
+
+    }
+
+    @Override
+    public void visit(RoleDistributionState state) {
+
     }
 
     @Override
@@ -39,7 +49,7 @@ public class TestCommand extends ACommand {
 
     @Override
     public void visit(EndingState state) {
-        plugin.getGameStateManager().setGameState(AGameState.LOBBY_STATE);
+        plugin.getGameStateManager().setGameState(AGameState.LOBBY_WAITING_STATE);
     }
 
     @Override

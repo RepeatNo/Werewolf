@@ -12,10 +12,12 @@ public class GameStateManager {
 
     public GameStateManager(Werewolf plugin) {
         this.plugin = plugin;
-        gameStates = new AGameState[6];
+        gameStates = new AGameState[8];
 
         gameStates[AGameState.SETUP_STATE] = new SetupState(plugin);
-        gameStates[AGameState.LOBBY_STATE] = new LobbyState(plugin);
+        gameStates[AGameState.LOBBY_WAITING_STATE] = new LobbyWaitingState(plugin);
+        gameStates[AGameState.LOBBY_READY_STATE] = new LobbyReadyState(plugin);
+        gameStates[AGameState.ROLE_DISTRIBUTION_STATE] = new RoleDistributionState(plugin);
         gameStates[AGameState.DISCUSSION_STATE] = new DiscussionState(plugin);
         gameStates[AGameState.DAY_STATE] = new DayState(plugin);
         gameStates[AGameState.NIGHT_STATE] = new NightState(plugin);

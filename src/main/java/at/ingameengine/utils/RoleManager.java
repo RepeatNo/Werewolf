@@ -23,7 +23,7 @@ public class RoleManager {
             }
         }
 
-        for (WerewolfPlayer player : plugin.getPlayers()) {
+        for (WerewolfPlayer player : plugin.getWerewolfPlayers()) {
             int random = (int) (Math.random() * roles.size());
             player.setRole(roles.get(random));
             player.sendMessage("Du bist " + roles.get(random).getClass().getSimpleName());

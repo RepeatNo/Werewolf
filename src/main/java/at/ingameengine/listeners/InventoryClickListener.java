@@ -7,6 +7,7 @@ import at.ingameengine.utils.InventoryBuilder;
 import at.ingameengine.utils.InventoryFactory;
 import at.ingameengine.werewolf.Werewolf;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -18,7 +19,6 @@ public class InventoryClickListener extends AListener {
     }
 
     InventoryClickEvent event;
-
     InventoryFactory inventoryFactory;
     InventoryBuilder inventoryBuilder;
 
@@ -36,8 +36,18 @@ public class InventoryClickListener extends AListener {
     }
 
     @Override
-    public void visit(LobbyState state) {
+    public void visit(LobbyWaitingState state) {
         handleInventoryClickEvent(event);
+    }
+
+    @Override
+    public void visit(LobbyReadyState state) {
+
+    }
+
+    @Override
+    public void visit(RoleDistributionState state) {
+
     }
 
     @Override

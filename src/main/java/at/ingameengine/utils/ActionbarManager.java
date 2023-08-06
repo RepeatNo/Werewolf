@@ -7,9 +7,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import javax.management.relation.Role;
 
 public class ActionbarManager {
 
@@ -40,7 +37,7 @@ public class ActionbarManager {
     }
 
     public void sendActionbar(String message, ARole role) {
-        for(WerewolfPlayer player : plugin.getPlayers()) {
+        for(WerewolfPlayer player : plugin.getWerewolfPlayers()) {
             if(player.getRole() == role) {
                 sendActionbar(message, player.getPlayer());
             }
@@ -49,10 +46,18 @@ public class ActionbarManager {
 
     public void startActionBar(String message) {
         runnableTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-
             @Override
             public void run() {
                 sendActionbar(message);
+            }
+        }, 1, 20L);
+    }
+
+    public void startActionBar(String message, String permission) {
+        runnableTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                sendActionbar(message, permission);
             }
         }, 1, 20L);
     }
